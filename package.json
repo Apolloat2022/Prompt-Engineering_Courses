@@ -1,4 +1,4 @@
-﻿{
+{
     "name":  "promptcraft-frontend",
     "dependencies":  {
                          "framer-motion":  "latest",
@@ -8,3 +8,4 @@
                          "next":  "latest"
                      }
 }
+
