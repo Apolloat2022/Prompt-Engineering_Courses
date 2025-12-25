@@ -1,0 +1,17 @@
+{
+    "name": "promptcraft-frontend",
+    "dependencies": {
+        "framer-motion": "latest",
+        "lucide-react": "latest",
+        "next": "latest",
+        "next-auth": "^4.24.13",
+        "react": "latest",
+        "tailwindcss": "latest"
+    },
+    "scripts": {
+        "lint": "next lint",
+        "build": "next build",
+        "dev": "next dev",
+        "start": "next start"
+    }
+}

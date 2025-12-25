@@ -1,0 +1,9 @@
+{
+    "name":  "promptcraft-backend",
+    "dependencies":  {
+                         "dotenv":  "latest",
+                         "pg":  "latest",
+                         "express":  "latest",
+                         "socket.io":  "latest"
+                     }
+}
