@@ -6,6 +6,11 @@
                          "tailwindcss":  "latest",
                          "lucide-react":  "latest",
                          "next":  "latest"
-                     }
+                     },
+    "scripts":  {
+                    "lint":  "next lint",
+                    "build":  "next build",
+                    "dev":  "next dev",
+                    "start":  "next start"
+                }
 }
-
