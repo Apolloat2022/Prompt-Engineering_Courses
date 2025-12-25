@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const pool = require('../../backend/src/models/db');
+=======
+﻿const pool = require('../../backend/src/models/db');
+>>>>>>> 65c12ca765f64ad13ca825d631ed40eb7c6066e5
 
 const seedDatabase = async () => {
     try {

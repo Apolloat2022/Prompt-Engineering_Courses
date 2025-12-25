@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const express = require('express');
+=======
+﻿const express = require('express');
+>>>>>>> 65c12ca765f64ad13ca825d631ed40eb7c6066e5
 const router = express.Router();
 
 // This is the "Scoring Agent" Logic

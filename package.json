@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "name": "promptcraft-frontend",
     "dependencies": {
         "framer-motion": "latest",
@@ -14,4 +15,20 @@
         "dev": "next dev",
         "start": "next start"
     }
+=======
+    "name":  "promptcraft-frontend",
+    "dependencies":  {
+                         "framer-motion":  "latest",
+                         "react":  "latest",
+                         "tailwindcss":  "latest",
+                         "lucide-react":  "latest",
+                         "next":  "latest"
+                     },
+    "scripts":  {
+                    "lint":  "next lint",
+                    "build":  "next build",
+                    "dev":  "next dev",
+                    "start":  "next start"
+                }
+>>>>>>> 65c12ca765f64ad13ca825d631ed40eb7c6066e5
 }

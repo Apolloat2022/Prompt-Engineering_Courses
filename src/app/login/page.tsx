@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 'use client';
+=======
+﻿'use client';
+>>>>>>> 65c12ca765f64ad13ca825d631ed40eb7c6066e5
 import { signIn } from "next-auth/react";
 
 export default function Login() {
