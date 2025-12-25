@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
-=======
-﻿import React from 'react';
->>>>>>> 65c12ca765f64ad13ca825d631ed40eb7c6066e5
-
+﻿
 export default function LandingPage() {
   return (
     <div className="relative overflow-hidden">
@@ -53,11 +48,6 @@ export default function LandingPage() {
               <p className="text-gray-400 text-sm mb-8">
                 Master the core architecture of large language models for IT workflows.
               </p>
-<<<<<<< HEAD
-              <div className="text-cyber-blue font-bold group-hover:underline">Learn more â†’</div>
-=======
-              <div className="text-cyber-blue font-bold group-hover:underline">Learn more →</div>
->>>>>>> 65c12ca765f64ad13ca825d631ed40eb7c6066e5
             </div>
           ))}
         </div>

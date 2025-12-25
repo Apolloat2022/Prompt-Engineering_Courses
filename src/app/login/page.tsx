@@ -1,21 +1,16 @@
-<<<<<<< HEAD
-'use client';
-=======
 ﻿'use client';
->>>>>>> 65c12ca765f64ad13ca825d631ed40eb7c6066e5
 import { signIn } from "next-auth/react";
 
 export default function Login() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0F172A]">
-      <div className="glass-card p-10 w-full max-w-md border border-white/10 text-center">
-        <h1 className="text-3xl font-bold mb-2">Access Portal</h1>
-        <p className="text-gray-400 text-sm mb-8 uppercase tracking-widest">PromptCraft Pro</p>
-        <button 
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="glass-card p-8 max-w-md w-full">
+        <h2 className="text-2xl font-bold mb-6">Login</h2>
+        <button
           onClick={() => signIn()}
-          className="w-full py-4 rounded-lg bg-cyber-blue font-bold btn-glow hover:scale-105 transition"
+          className="w-full bg-cyber-blue text-white py-3 rounded hover:bg-opacity-80"
         >
-          Initialize Session
+          Sign In
         </button>
       </div>
     </div>
