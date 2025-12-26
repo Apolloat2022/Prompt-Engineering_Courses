@@ -7,21 +7,24 @@ export default function HomePage() {
       title: "Prompt Fundamentals",
       description: "Master the core principles of effective prompting and learn to communicate with AI models efficiently.",
       icon: "🎯",
-      color: "from-emerald-500 to-green-600"
+      color: "from-emerald-500 to-green-600",
+      link: "/courses/level-1"
     },
     {
       level: "Advanced",
       title: "Advanced Techniques",
       description: "Explore chain-of-thought reasoning, few-shot learning, and sophisticated prompting strategies.",
       icon: "🚀",
-      color: "from-purple-500 to-pink-600"
+      color: "from-purple-500 to-pink-600",
+      link: "/courses/level-1" // pointing to same for demo
     },
     {
       level: "Intermediate",
       title: "AI Workflows",
       description: "Build complex automation pipelines and integrate AI into your production environment.",
       icon: "⚡",
-      color: "from-cyan-500 to-blue-600"
+      color: "from-cyan-500 to-blue-600",
+      link: "/courses/level-1" // pointing to same for demo
     }
   ];
 
@@ -30,7 +33,7 @@ export default function HomePage() {
       {/* Hero Section - Professional & Engaging */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#0a0e27] via-[#0f1535] to-[#0a0e27]">
         {/* Subtle Grid Background */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.15]"
           style={{
             backgroundImage: `
@@ -40,10 +43,10 @@ export default function HomePage() {
             backgroundSize: '80px 80px'
           }}
         />
-        
+
         {/* Ambient Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-cyan-500/10 rounded-full blur-[120px]" />
-        
+
         {/* Content */}
         <div className="relative max-w-[1400px] mx-auto px-8 py-32">
           <div className="max-w-4xl mx-auto text-center">
@@ -69,13 +72,13 @@ export default function HomePage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a 
+              <a
                 href="/dashboard"
                 className="w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-[1.02]"
               >
                 Start Learning Now
               </a>
-              <a 
+              <a
                 href="#courses"
                 className="w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-xl bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300"
               >
@@ -120,13 +123,13 @@ export default function HomePage() {
           {/* Course Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {courses.map((course, index) => (
-              <div 
+              <div
                 key={index}
                 className="group relative rounded-2xl bg-gradient-to-b from-white/[0.07] to-white/[0.02] border border-white/[0.08] p-8 hover:border-cyan-500/30 transition-all duration-500 hover:-translate-y-1"
               >
                 {/* Gradient Accent */}
                 <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-2xl bg-gradient-to-r ${course.color}`} />
-                
+
                 {/* Icon - Properly Sized */}
                 <div className="text-5xl mb-6">{course.icon}</div>
 
@@ -144,8 +147,8 @@ export default function HomePage() {
                 </p>
 
                 {/* CTA Link */}
-                <a 
-                  href="/dashboard"
+                <a
+                  href={course.link || "/courses/level-1"}
                   className="inline-flex items-center gap-2 text-cyan-400 font-medium group-hover:gap-3 transition-all"
                 >
                   <span>Explore Course</span>
@@ -162,7 +165,7 @@ export default function HomePage() {
       {/* CTA Section */}
       <section className="relative py-24 px-8 bg-gradient-to-b from-[#0a0e27] to-[#0f1535] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-blue-500/5" />
-        
+
         <div className="relative max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Ready to Get Started?
@@ -170,7 +173,7 @@ export default function HomePage() {
           <p className="text-xl text-gray-400 mb-10">
             Join hundreds of students already mastering AI prompt engineering
           </p>
-          <a 
+          <a
             href="/login"
             className="inline-block px-10 py-4 text-lg font-semibold rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-2xl shadow-cyan-500/30 hover:shadow-cyan-500/50 hover:scale-[1.02]"
           >

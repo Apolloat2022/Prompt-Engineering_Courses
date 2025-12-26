@@ -38,8 +38,8 @@ export default function Dashboard() {
                             <div className="bg-cyber-blue h-full w-0"></div>
                         </div>
                         <p className="text-gray-400 mb-6">No active courses. Start your first module today.</p>
-                        <a href="/" className="inline-block w-full py-3 text-center bg-cyber-blue text-deep-space font-bold rounded-lg hover:shadow-[0_0_20px_rgba(0,217,255,0.4)] transition-shadow">
-                            Browse Catalog
+                        <a href="/courses/level-1" className="inline-block w-full py-3 text-center bg-cyber-blue text-deep-space font-bold rounded-lg hover:shadow-[0_0_20px_rgba(0,217,255,0.4)] transition-shadow">
+                            Start Level 1 Course
                         </a>
                     </div>
                 </div>
