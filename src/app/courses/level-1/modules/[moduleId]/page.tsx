@@ -164,9 +164,9 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
             alert("You need 80% to proceed!");
             return;
         }
-        setShowQuiz(false);
-        setShowCertificate(true);
-        setPassed(true);
+        // Redirect to certificate page
+        const uniqueId = Math.random().toString(36).substr(2, 9).toUpperCase();
+        router.push(`/certificate?course=${encodeURIComponent(activeModule.title)}&id=${uniqueId}`);
     };
 
     return (
@@ -221,13 +221,13 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                             </div>
                         )}
                         <button
-                            onClick={() => isPassed ? setShowCertificate(true) : alert("Please pass the quiz with 80% to complete.")}
+                            onClick={() => isPassed ? handleContinue() : alert("Please pass the quiz with 80% to complete.")}
                             className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-lg ${isPassed
                                     ? 'bg-cyan-600 hover:bg-cyan-500 shadow-cyan-500/20'
                                     : 'bg-gray-700 text-gray-400 cursor-not-allowed'
                                 }`}
                         >
-                            Complete & Continue
+                            Get Certificate
                         </button>
                     </div>
                 </header>
@@ -304,7 +304,7 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                                     )}
                                     {isPassed && (
                                         <button onClick={handleContinue} className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-xl font-bold shadow-lg shadow-cyan-500/20 transition-all">
-                                            Claim Certificate
+                                            Get Certificate
                                         </button>
                                     )}
                                 </div>
@@ -322,77 +322,6 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                         )}
                     </div>
                 </div>
-
-                {/* Certificate Modal - Modern & Branded */}
-                {showCertificate && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-in fade-in duration-500">
-                        <div className="bg-gradient-to-br from-[#0f1535] to-[#0a0e27] border border-cyan-500/50 p-10 rounded-xl max-w-3xl w-full text-center relative shadow-[0_0_80px_rgba(6,182,212,0.15)] flex flex-col items-center">
-                            <button onClick={() => setShowCertificate(false)} className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">✕</button>
-
-                            {/* Certificate Content */}
-                            <div className="border-[1px] border-white/10 p-2 w-full">
-                                <div className="border-[1px] border-white/10 p-12 bg-white/[0.02] relative overflow-hidden">
-                                    {/* Background watermark */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
-
-                                    {/* Header Logo */}
-                                    <div className="flex flex-col items-center gap-4 mb-8">
-                                        <div className="h-16 w-16 relative">
-                                            <img src="/logo.png" alt="Apollo Logo" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]" />
-                                        </div>
-                                        <h2 className="text-xl uppercase tracking-[0.3em] text-cyan-500 font-light">Apollo Technologies US</h2>
-                                    </div>
-
-                                    <h1 className="text-4xl md:text-5xl font-serif text-white mb-6 tracking-wide">Certificate of Completion</h1>
-
-                                    <p className="text-gray-400 text-sm uppercase tracking-widest mb-4">This certifies that</p>
-
-                                    <div className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 to-blue-400 mb-8 font-script border-b border-white/10 pb-4 inline-block px-12 min-w-[300px]">
-                                        Student Name
-                                    </div>
-
-                                    <p className="text-gray-300 mb-2 font-light">Has successfully demonstrated proficiency in the module</p>
-                                    <p className="text-xl font-medium text-white mb-12">{activeModule.title}</p>
-
-                                    <div className="flex justify-between items-end w-full px-8 mt-12">
-                                        <div className="text-left">
-                                            <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Date</p>
-                                            <p className="text-sm text-gray-300 font-mono">{new Date().toLocaleDateString()}</p>
-                                        </div>
-                                        <div className="text-right">
-                                            <div className="mb-2">
-                                                <span className="font-handwriting text-2xl text-cyan-400 block -rotate-3 transform origin-bottom-right" style={{ fontFamily: 'cursive' }}>Robin Pandey</span>
-                                            </div>
-                                            <div className="h-px w-40 bg-white/20 mb-2"></div>
-                                            <p className="text-xs text-gray-500 uppercase tracking-wider">Robin Pandey, CEO</p>
-                                            <p className="text-xs text-cyan-500/50 uppercase tracking-widest">Apollo Technologies US</p>
-                                        </div>
-                                    </div>
-
-                                    {/* ID Badge */}
-                                    <div className="absolute top-6 right-6 opacity-30">
-                                        <p className="text-[9px] font-mono border border-white/20 px-2 py-0.5 rounded">ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-8 flex gap-4">
-                                <button
-                                    onClick={() => window.print()}
-                                    className="px-6 py-2 bg-white/5 hover:bg-white/10 text-white text-sm font-medium rounded-lg transition-colors border border-white/10"
-                                >
-                                    Print / Save PDF
-                                </button>
-                                <button
-                                    onClick={() => { setShowCertificate(false); router.push('/dashboard'); }}
-                                    className="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-bold rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all"
-                                >
-                                    Return to Dashboard
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                )}
             </main>
         </div>
     );
