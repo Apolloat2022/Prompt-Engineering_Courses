@@ -1,18 +1,18 @@
-/** @type {import('tailwindcss').Config} */
+﻿/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
   theme: {
     extend: {
       colors: {
-        'cyber-blue': '#00d9ff', // Synchronized with globals.css
-        'deep-space': '#050511', // Darker, more cinematic
-        'neon-purple': '#b026ff',
+        'deep-space': '#0a0e27',
+        'space-900': '#0f172a',
+        'cyber-blue': '#06b6d4',
       },
-      backgroundImage: {
-        'cinematic-gradient': 'radial-gradient(circle at top, #1E293B 0%, #0F172A 100%)',
-      }
     },
   },
   plugins: [],
 }
-
