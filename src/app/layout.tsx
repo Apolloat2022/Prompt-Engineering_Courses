@@ -1,7 +1,6 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { Providers } from './providers';
-import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,13 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="flex items-center justify-between h-20">
                 {/* Logo & Brand */}
                 <a href="/" className="flex items-center gap-4 group">
-                  <div className="relative w-36 h-36 flex-shrink-0 rounded-xl overflow-hidden ring-1 ring-cyan-500/30 group-hover:ring-cyan-500/60 transition-all duration-300">
-                    <Image
+                  <div className="relative h-14 w-14 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
+                    <img
                       src="/logo.png"
                       alt="Apollo Technologies"
-                      width={48}
-                      height={48}
-                      className="object-cover"
+                      className="w-full h-full object-contain filter drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]"
                     />
                   </div>
                   <div className="flex flex-col gap-0.5">
@@ -43,8 +40,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <a href="/dashboard" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
                     Dashboard
                   </a>
-                  <a 
-                    href="/login" 
+                  <a
+                    href="/login"
                     className="px-6 py-2.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40"
                   >
                     Get Started
