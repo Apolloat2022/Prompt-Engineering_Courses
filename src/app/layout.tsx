@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div className="flex items-center justify-between h-20">
                 {/* Logo & Brand */}
                 <a href="/" className="flex items-center gap-4 group">
-                  <div className="relative w-12 h-12 flex-shrink-0 rounded-xl overflow-hidden ring-1 ring-cyan-500/30 group-hover:ring-cyan-500/60 transition-all duration-300">
+                  <div className="relative w-36 h-36 flex-shrink-0 rounded-xl overflow-hidden ring-1 ring-cyan-500/30 group-hover:ring-cyan-500/60 transition-all duration-300">
                     <Image
                       src="/logo.png"
                       alt="Apollo Technologies"

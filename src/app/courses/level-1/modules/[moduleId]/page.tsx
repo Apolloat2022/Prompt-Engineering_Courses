@@ -2,43 +2,112 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-// Mock Data (In a real app, this would come from a DB or API)
-const courseData = {
+// Types
+interface Quiz {
+    question: string;
+    options: string[];
+    correct: number;
+}
+
+interface Module {
+    id: string;
+    title: string;
+    type: string;
+    duration: string;
+    videoUrl?: string;
+    quiz?: Quiz;
+}
+
+interface Week {
+    id: number;
+    title: string;
+    modules: Module[];
+}
+
+interface CourseData {
+    title: string;
+    weeks: Week[];
+}
+
+// Mock Data
+const courseData: CourseData = {
     title: "AI Communication Fundamentals",
     weeks: [
         {
             id: 1,
             title: "Week 1: The AI Mindset",
             modules: [
-                { id: "1.1", title: "1.1 LLM Perspective", type: "video", duration: "10m" },
-                { id: "1.2", title: "1.2 First Contact", type: "video", duration: "15m" }
+                {
+                    id: "1.1",
+                    title: "1.1 LLM Perspective",
+                    type: "video",
+                    duration: "10m",
+                    videoUrl: "https://www.youtube.com/embed/zjkBMFhNj_g",
+                    quiz: {
+                        question: "What is the primary function of an LLM?",
+                        options: ["To think like a human", "To predict the next token", "To search the internet", "To executing python code only"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: "1.2",
+                    title: "1.2 First Contact",
+                    type: "video",
+                    duration: "15m",
+                    videoUrl: "https://www.youtube.com/embed/jKrj0j9H19u",
+                    quiz: {
+                        question: "Which of the following is NOT a component of a prompt?",
+                        options: ["Context", "Instruction", "Input Data", "Compiler Settings"],
+                        correct: 3
+                    }
+                }
             ]
         },
         {
             id: 2,
             title: "Week 2: Core Principles",
             modules: [
-                { id: "2.1", title: "2.1 Anatomy of a Prompt", type: "video", duration: "12m" },
-                { id: "2.2", title: "2.2 Essential Patterns", type: "video", duration: "20m" }
+                { id: "2.1", title: "2.1 Anatomy of a Prompt", type: "video", duration: "12m", videoUrl: "https://www.youtube.com/embed/_ZvnD7N7p2w" },
+                { id: "2.2", title: "2.2 Essential Patterns", type: "video", duration: "20m", videoUrl: "" }
             ]
         }
     ]
 };
 
 export default function ModulePlayer({ params }: { params: Promise<{ moduleId: string }> }) {
-    // Safe handling for build in Next.js 15: params is a Promise
+    const router = useRouter();
     const resolvedParams = React.use(params);
     const activeModuleId = resolvedParams.moduleId || "1.1";
 
-    // Find current module info
+    // State
+    const [showQuiz, setShowQuiz] = useState(false);
+    const [quizCompleted, setQuizCompleted] = useState(false);
+    const [showCertificate, setShowCertificate] = useState(false);
+
+    // Find active module
     const activeModule = courseData.weeks
         .flatMap(w => w.modules)
         .find(m => m.id === activeModuleId) || courseData.weeks[0].modules[0];
 
+    const handleQuizSubmit = (optionIndex: number) => {
+        if (activeModule.quiz && optionIndex === activeModule.quiz.correct) {
+            setQuizCompleted(true);
+            // alert("Correct! You passed the quiz.");
+        } else {
+            alert("Incorrect. Try again!");
+        }
+    };
+
+    const handleComplete = () => {
+        // Demo logic: if on the last implemented module or user wants to finish
+        setShowCertificate(true);
+    };
+
     return (
-        <div className="flex h-screen bg-[#0a0e27] text-white overflow-hidden">
-            {/* Sidebar Navigation */}
+        <div className="flex h-screen bg-[#0a0e27] text-white overflow-hidden font-sans">
+            {/* Sidebar - Same as before */}
             <aside className="w-80 bg-[#0f1535] border-r border-white/5 flex flex-col hidden md:flex">
                 <div className="p-6 border-b border-white/5">
                     <Link href="/courses/level-1" className="text-sm text-gray-400 hover:text-white flex items-center gap-2 mb-4">
@@ -46,18 +115,16 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                     </Link>
                     <h2 className="font-bold text-lg text-cyan-400">{courseData.title}</h2>
                 </div>
-
                 <div className="flex-1 overflow-y-auto p-4 space-y-6">
                     {courseData.weeks.map(week => (
                         <div key={week.id}>
-                            <h3 className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-3 px-2">
-                                {week.title}
-                            </h3>
+                            <h3 className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-3 px-2">{week.title}</h3>
                             <div className="space-y-1">
                                 {week.modules.map(module => (
                                     <Link
                                         key={module.id}
                                         href={`/courses/level-1/modules/${module.id}`}
+                                        onClick={() => { setShowQuiz(false); setQuizCompleted(false); }}
                                         className={`flex items-center justify-between p-3 rounded-lg text-sm transition-all ${activeModuleId === module.id
                                                 ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
                                                 : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
@@ -73,16 +140,18 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                 </div>
             </aside>
 
-            {/* Main Content Area */}
+            {/* Main Content */}
             <main className="flex-1 flex flex-col h-full overflow-hidden relative">
-                {/* Top Bar (Mobile Nav would go here) */}
-                <header className="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-[#0a0e27]/95 backdrop-blur">
-                    <h1 className="text-xl font-bold">{activeModule.title}</h1>
+                {/* Top Bar */}
+                <header className="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-[#0a0e27]/95 backdrop-blur z-20">
+                    <h1 className="text-xl font-bold truncate">{activeModule.title}</h1>
                     <div className="flex items-center gap-4">
-                        <button className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-sm font-medium transition-colors">
-                            Ask AI Assistant
-                        </button>
-                        <button className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-sm font-bold transition-colors shadow-lg shadow-cyan-500/20">
+                        {activeModule.quiz && !quizCompleted && (
+                            <button onClick={() => setShowQuiz(true)} className="px-4 py-2 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20 text-sm font-medium hover:bg-orange-500/20 transition-colors">
+                                Take Quiz
+                            </button>
+                        )}
+                        <button onClick={handleComplete} className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-sm font-bold transition-colors shadow-lg shadow-cyan-500/20">
                             Complete & Continue
                         </button>
                     </div>
@@ -91,44 +160,102 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                 {/* Scrollable Content */}
                 <div className="flex-1 overflow-y-auto p-8">
                     <div className="max-w-4xl mx-auto">
-                        {/* Video Player Placeholder */}
+
+                        {/* Video Player */}
                         <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/10 mb-8 relative group">
-                            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-black">
-                                <div className="w-20 h-20 rounded-full bg-cyan-500/20 flex items-center justify-center backdrop-blur-sm group-hover:scale-110 transition-transform cursor-pointer">
-                                    <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[24px] border-l-cyan-400 border-b-[12px] border-b-transparent ml-2" />
+                            {activeModule.videoUrl ? (
+                                <iframe
+                                    src={activeModule.videoUrl}
+                                    className="w-full h-full"
+                                    title={activeModule.title}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                />
+                            ) : (
+                                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-black">
+                                    <div className="text-center text-gray-500">
+                                        <span className="block text-4xl mb-2">📹</span>
+                                        <p>Video content unavailable for this module.</p>
+                                    </div>
                                 </div>
-                            </div>
-                            {/* Progress Bar */}
-                            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-800">
-                                <div className="w-1/3 h-full bg-cyan-500" />
-                            </div>
+                            )}
                         </div>
 
-                        {/* Lesson Content */}
+                        {/* Quiz Section (Inline) */}
+                        {showQuiz && activeModule.quiz && !quizCompleted && (
+                            <div className="mb-8 p-6 bg-gradient-to-r from-deep-space to-gray-900 border border-white/10 rounded-xl animate-in fade-in slide-in-from-top-4">
+                                <h3 className="text-lg font-bold text-white mb-4">Quick Check: {activeModule.quiz.question}</h3>
+                                <div className="grid gap-3">
+                                    {activeModule.quiz.options.map((opt, idx) => (
+                                        <button
+                                            key={idx}
+                                            onClick={() => handleQuizSubmit(idx)}
+                                            className="text-left p-3 rounded-lg bg-white/5 hover:bg-cyan-500/20 hover:text-cyan-400 transition-colors"
+                                        >
+                                            {opt}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Quiz Success Message */}
+                        {quizCompleted && (
+                            <div className="mb-8 p-4 bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl flex items-center gap-3">
+                                <span className="text-xl">✅</span>
+                                <span className="font-bold">Quiz Passed! Great job.</span>
+                            </div>
+                        )}
+
+                        {/* Lesson Text */}
                         <div className="prose prose-invert max-w-none">
                             <h2 className="text-2xl font-bold text-white mb-4">Lesson Overview</h2>
                             <p className="text-gray-400 leading-relaxed mb-6">
-                                In this module, we explore the fundamental architecture of Large Language Models (LLMs) and how they process information. Understanding this "perspective" is crucial for crafting effective prompts.
+                                In this module, we explore the fundamental concepts necessary to become proficient in prompt engineering.
                             </p>
-
                             <h3 className="text-xl font-bold text-white mb-3">Key Takeaways</h3>
                             <ul className="space-y-2 text-gray-400 list-disc pl-5 mb-8">
-                                <li>LLMs are probabilistic, not deterministic.</li>
-                                <li>Context window limitations and how to manage them.</li>
-                                <li>The difference between training data and active context.</li>
+                                <li>Understanding the model's architecture.</li>
+                                <li>Identifying key constraints and capabilities.</li>
+                                <li>Structuring inputs for optimal outputs.</li>
                             </ul>
-
-                            <div className="p-6 rounded-xl bg-blue-500/5 border border-blue-500/10 mb-8">
-                                <h4 className="text-blue-400 font-bold mb-2 flex items-center gap-2">
-                                    <span>💡</span> Pro Tip
-                                </h4>
-                                <p className="text-sm text-gray-400">
-                                    Always treat the LLM as a sophisticated pattern matcher, not a human brain. It predicts the next token based on the sequence you provide.
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>
+
+                {/* Certificate Modal */}
+                {showCertificate && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
+                        <div className="bg-[#0a0e27] border border-cyan-500/30 p-8 rounded-2xl max-w-2xl w-full text-center relative shadow-[0_0_50px_rgba(6,182,212,0.2)]">
+                            <button onClick={() => setShowCertificate(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
+
+                            <div className="mb-6 flex justify-center">
+                                <div className="w-20 h-20 rounded-full bg-cyan-500/10 flex items-center justify-center border border-cyan-500/50">
+                                    <span className="text-4xl">🏆</span>
+                                </div>
+                            </div>
+
+                            <h2 className="text-3xl font-bold text-white mb-2">Congratulations!</h2>
+                            <p className="text-gray-400 mb-8">You have completed the module requirements.</p>
+
+                            <div className="border-4 border-double border-white/10 p-8 bg-white/5 rounded-lg mb-8 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-2 text-[10px] text-gray-600 font-mono">ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}</div>
+                                <h3 className="text-2xl font-serif text-cyan-400 mb-4">Certificate of Completion</h3>
+                                <p className="text-sm text-gray-300 mb-2">This certifies that</p>
+                                <p className="text-xl font-bold text-white mb-4 border-b border-white/20 inline-block px-8 pb-1">Student Name</p>
+                                <p className="text-sm text-gray-300">has successfully mastered the fundamentals of</p>
+                                <p className="text-lg font-bold text-cyan-300 mt-1">Prompt Engineering Level 1</p>
+                            </div>
+
+                            <button
+                                onClick={() => { setShowCertificate(false); router.push('/dashboard'); }}
+                                className="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all"
+                            >
+                                Claim Certificate & Return to Dashboard
+                            </button>
+                        </div>
+                    </div>
+                )}
             </main>
         </div>
     );
