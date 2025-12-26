@@ -18,8 +18,8 @@ function CertificateContent() {
     useEffect(() => {
         setDate(new Date().toLocaleDateString('en-US', {
             year: 'numeric',
-            month: 'long',
-            day: 'numeric'
+            month: '2-digit',
+            day: '2-digit'
         }));
     }, []);
 
@@ -27,112 +27,107 @@ function CertificateContent() {
         window.print();
     };
 
-    // Fallback for non-logged in users (though they should be logged in)
-    const studentName = session?.user?.name || "Valued Student";
+    const studentName = session?.user?.name || "Apollo Technologies US";
 
     return (
-        <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center p-8 print:p-0 print:bg-white">
+        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-8 print:p-0 print:bg-white">
             {/* Navigation (Hidden on Print) */}
-            <nav className="w-full max-w-7xl mb-8 flex justify-between items-center print:hidden">
-                <Link href="/dashboard" className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+            <nav className="w-full max-w-[1000px] mb-8 flex justify-between items-center print:hidden">
+                <Link href="/dashboard" className="flex items-center gap-2 text-gray-600 hover:text-black transition-colors">
                     <span>← Back to Dashboard</span>
                 </Link>
                 <button
                     onClick={handlePrint}
-                    className="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg shadow-lg shadow-cyan-500/20 transition-all flex items-center gap-2"
+                    className="px-6 py-2 bg-[#1e3a8a] hover:bg-[#172554] text-white font-bold rounded-lg shadow-lg transition-all flex items-center gap-2"
                 >
-                    <span>🖨️ Download / Print PDF</span>
+                    <span>🖨️ Download PDF</span>
                 </button>
             </nav>
 
-            {/* Certificate Container */}
-            <div className="relative w-full max-w-[1100px] aspect-[1.4/1] bg-white text-black shadow-2xl overflow-hidden print:shadow-none print:w-full print:h-full print:absolute print:inset-0 print:m-0">
+            {/* Certificate Paper */}
+            <div className="relative w-full max-w-[1000px] aspect-[1.414/1] bg-white text-black shadow-2xl overflow-hidden print:shadow-none print:w-full print:h-full print:absolute print:inset-0 print:m-0 flex flex-col">
 
-                {/* Decorative Border */}
-                <div className="absolute inset-4 border-[3px] border-[#0a0e27] pointer-events-none z-10"></div>
-                <div className="absolute inset-6 border-[1px] border-cyan-500/30 pointer-events-none z-10"></div>
+                {/* Top Right Corner Accent */}
+                <div className="absolute top-0 right-0 w-0 h-0 border-t-[150px] border-r-[150px] border-t-transparent border-r-[#1e3a8a] z-10"></div>
+                <div className="absolute top-[20px] right-[20px] w-0 h-0 border-t-[100px] border-r-[100px] border-t-transparent border-r-[#ca8a04] z-20"></div>
 
-                {/* Corner Ornaments */}
-                <div className="absolute top-4 left-4 w-16 h-16 border-t-[3px] border-l-[3px] border-[#0a0e27] z-20"></div>
-                <div className="absolute top-4 right-4 w-16 h-16 border-t-[3px] border-r-[3px] border-[#0a0e27] z-20"></div>
-                <div className="absolute bottom-4 left-4 w-16 h-16 border-b-[3px] border-l-[3px] border-[#0a0e27] z-20"></div>
-                <div className="absolute bottom-4 right-4 w-16 h-16 border-b-[3px] border-r-[3px] border-[#0a0e27] z-20"></div>
+                {/* Bottom Left Corner Accent */}
+                <div className="absolute bottom-0 left-0 w-0 h-0 border-b-[150px] border-l-[150px] border-b-transparent border-l-[#1e3a8a] z-10"></div>
+                <div className="absolute bottom-[20px] left-[20px] w-0 h-0 border-b-[100px] border-l-[100px] border-b-transparent border-l-[#ca8a04] z-20"></div>
 
-                {/* Background Watermark */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
-                    <img src="/logo.png" alt="Watermark" className="w-[600px] h-[600px] object-contain grayscale" />
+                {/* --- Header Section --- */}
+                <div className="pt-16 px-16 flex justify-between items-start relative z-30">
+                    {/* Logo Left */}
+                    <div className="w-48">
+                        <img src="/logo.png" alt="Apollo Technologies" className="w-full object-contain" />
+                    </div>
+
+                    {/* Badge Right */}
+                    <div className="bg-[#1e3a8a] text-white px-8 py-3 rounded-lg mr-16 shadow-lg">
+                        <h2 className="text-xl font-bold tracking-widest font-serif">BUILDFOLIO</h2>
+                        <p className="text-[10px] uppercase tracking-wider text-center text-blue-200">Certificate Platform</p>
+                    </div>
                 </div>
 
-                {/* Content */}
-                <div className="relative z-30 h-full flex flex-col items-center justify-between py-20 px-16 text-center">
+                {/* divider */}
+                <div className="w-[85%] h-0.5 bg-[#1e3a8a] mx-auto mt-12 mb-12"></div>
 
-                    {/* Header */}
-                    <div className="flex flex-col items-center gap-3">
-                        <div className="h-16 w-16 mb-2">
-                            <img src="/logo.png" alt="Apollo Logo" className="w-full h-full object-contain" />
-                        </div>
-                        <h2 className="text-xl uppercase tracking-[0.4em] text-[#0a0e27] font-semibold">Apollo Technologies US</h2>
-                    </div>
+                {/* --- Main Content --- */}
+                <div className="text-center flex-1 flex flex-col items-center px-20">
+                    <h1 className="text-[#1e3a8a] text-6xl font-serif font-bold tracking-wider mb-4">CERTIFICATE</h1>
+                    <p className="text-gray-500 uppercase tracking-[0.2em] text-sm mb-2">OF {courseName.toUpperCase()}</p>
 
-                    {/* Title */}
-                    <div className="mt-8">
-                        <h1 className="text-5xl md:text-6xl font-serif text-[#0a0e27] tracking-wide mb-2">Certificate of Completion</h1>
-                        <div className="h-1 w-24 bg-cyan-500 mx-auto mt-4"></div>
-                    </div>
+                    <p className="text-gray-500 text-sm mt-8 mb-4">This Certificate Is Proudly Presented To</p>
 
-                    {/* Recipient */}
-                    <div className="w-full">
-                        <p className="text-gray-500 uppercase tracking-[0.2em] mb-6 text-sm">is hereby awarded to</p>
-                        <div className="text-4xl md:text-5xl font-bold text-[#0a0e27] font-serif italic border-b-2 border-gray-200 pb-4 mx-auto max-w-3xl">
-                            {studentName}
-                        </div>
+                    {/* Name */}
+                    <div className="font-cursive text-7xl text-[#1e3a8a] mb-8" style={{ fontFamily: 'Brush Script MT, cursive' }}>
+                        {studentName}
                     </div>
 
                     {/* Description */}
-                    <div className="max-w-2xl">
-                        <p className="text-gray-600 text-lg leading-relaxed">
-                            For successfully completing all requirements and demonstrating proficiency in the curriculum of
-                        </p>
-                        <h3 className="text-3xl font-bold text-[#0a0e27] mt-2">{courseName}</h3>
+                    <div className="max-w-3xl text-sm leading-relaxed text-gray-600 mb-8">
+                        We give this certificate because <span className="font-bold text-red-600">{studentName}</span> has completed the <span className="font-bold text-red-600">"{courseName}"</span> project and passed all assessments, demonstrating proficiency in prompt engineering, LLM strategy, and AI communication best practices.
                     </div>
 
-                    {/* Footer / Signatures */}
-                    <div className="flex justify-between items-end w-full px-12 mt-12">
-                        <div className="text-left">
-                            <div className="w-48 border-b border-gray-400 pb-1 mb-2 text-lg font-medium text-[#0a0e27]">
-                                {date}
-                            </div>
-                            <p className="text-xs text-gray-500 uppercase tracking-wider">Date Issued</p>
-                        </div>
+                    <p className="text-xs text-gray-400 italic mb-6">Certificate earned through Apollo Technologies US platform</p>
 
-                        <div className="text-right">
-                            <div className="w-64 border-b border-gray-400 pb-2 mb-2 relative">
-                                <img
-                                    src="/signature_placeholder.png"
-                                    alt="Robin Pandey"
-                                    className="absolute bottom-2 right-0 h-16 w-auto opacity-0"
-                                    onError={(e) => {
-                                        // Fallback to text signature if image missing
-                                        e.currentTarget.style.display = 'none';
-                                    }}
-                                />
-                                <span className="font-handwriting text-3xl text-[#0a0e27] block -rotate-3" style={{ fontFamily: 'Brush Script MT, cursive' }}>Robin Pandey</span>
-                            </div>
-                            <p className="text-sm font-bold text-[#0a0e27] uppercase tracking-wider">Robin Pandey, CEO</p>
-                            <p className="text-[10px] text-cyan-600 uppercase tracking-widest">Apollo Technologies US</p>
-                        </div>
+                    {/* Tech Stack Badges */}
+                    <div className="flex justify-center gap-3 mb-12">
+                        {['Next.js', 'TypeScript', 'Tailwind', 'Prisma', 'Stripe'].map((tech) => (
+                            <span key={tech} className="px-4 py-1 bg-[#1e3a8a] text-white rounded-full text-[10px] font-bold shadow-md">
+                                {tech}
+                            </span>
+                        ))}
                     </div>
-
-                    {/* ID Badge */}
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] text-gray-400 font-mono">
-                        Certificate ID: {certificateId} • Verify at apollotech.us/verify
-                    </div>
-
                 </div>
-            </div>
 
-            <div className="mt-8 text-gray-500 text-sm print:hidden">
-                © {new Date().getFullYear()} Apollo Technologies US. All rights reserved.
+                {/* --- Footer --- */}
+                <div className="px-20 pb-16 flex justify-between items-end relative z-30 w-full mb-4">
+
+                    {/* Signature */}
+                    <div className="text-center">
+                        <div className="w-64 border-b-2 border-gray-600 pb-2 mb-2 relative flex justify-center items-end h-16">
+                            {/* Signature Image or Text */}
+                            <span className="font-cursive text-4xl text-[#1e3a8a] -rotate-6 absolute bottom-4" style={{ fontFamily: 'Brush Script MT, cursive' }}>Robin Pandey</span>
+                        </div>
+                        <p className="font-serif text-xl text-[#1e3a8a]">Robin Pandey</p>
+                        <p className="text-[10px] uppercase tracking-widest text-gray-500">Chief Executive Officer</p>
+                    </div>
+
+                    {/* Date */}
+                    <div className="text-center">
+                        <div className="w-64 border-b-2 border-gray-600 pb-2 mb-2 flex justify-center items-end h-16">
+                            <span className="text-xl font-bold text-[#1e3a8a]">{date}</span>
+                        </div>
+                        <p className="text-[10px] uppercase tracking-widest text-gray-500">DATE</p>
+                    </div>
+                </div>
+
+                {/* Verification Footer */}
+                <div className="absolute bottom-4 right-8 text-[8px] text-gray-400">
+                    Certificate No: {certificateId} | Verify at apollotech.us/verify
+                </div>
+
             </div>
         </div>
     );
