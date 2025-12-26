@@ -8,60 +8,53 @@ const inter = Inter({ subsets: ['latin'] });
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-deep-space min-h-screen text-white antialiased`}>
+      <body className={`${inter.className} bg-[#0a0e27] min-h-screen text-white antialiased`}>
         <Providers>
-          {/* Compact Navigation */}
-          <nav className="fixed top-0 w-full z-50 bg-deep-space/80 backdrop-blur-xl border-b border-white/5">
-            <div className="max-w-7xl mx-auto px-6 lg:px-8">
-              <div className="flex items-center justify-between h-16">
-                {/* Logo - Compact */}
-                <a href="/" className="flex items-center gap-3 group">
-                  <div className="relative w-9 h-9 flex-shrink-0">
+          {/* Professional Navigation Bar */}
+          <nav className="fixed top-0 w-full z-50 bg-[#0a0e27]/95 backdrop-blur-md border-b border-white/[0.08]">
+            <div className="max-w-[1400px] mx-auto px-8">
+              <div className="flex items-center justify-between h-20">
+                {/* Logo & Brand - Properly Sized */}
+                <a href="/" className="flex items-center gap-4 group">
+                  <div className="relative w-12 h-12 flex-shrink-0 rounded-xl overflow-hidden ring-1 ring-cyan-500/30 group-hover:ring-cyan-500/60 transition-all duration-300">
                     <Image
                       src="/logo.png"
                       alt="Apollo Technologies"
-                      width={36}
-                      height={36}
-                      className="object-contain drop-shadow-[0_0_6px_rgba(6,182,212,0.4)] group-hover:drop-shadow-[0_0_10px_rgba(6,182,212,0.6)] transition-all"
+                      width={48}
+                      height={48}
+                      className="object-cover"
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-[9px] text-gray-400 tracking-wider uppercase font-medium">
-                      Apollo Technologies US
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-xs tracking-[0.15em] text-gray-500 font-medium uppercase">
+                      Apollo Technologies
                     </span>
-                    <span className="text-sm font-bold tracking-tight">
-                      PROMPT <span className="text-cyan-400">ENGINEERING</span>
+                    <span className="text-base font-bold tracking-tight bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent">
+                      Prompt Engineering
                     </span>
                   </div>
                 </a>
 
-                {/* Navigation Links - Compact */}
-                <div className="hidden md:flex items-center gap-6">
-                  <a 
-                    href="/" 
-                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                  >
+                {/* Navigation Links */}
+                <div className="flex items-center gap-8">
+                  <a href="/" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
                     Home
                   </a>
-                  <a 
-                    href="/dashboard" 
-                    className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                  >
+                  <a href="/dashboard" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
                     Dashboard
                   </a>
                   <a 
                     href="/login" 
-                    className="text-sm font-medium px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:shadow-lg hover:shadow-cyan-500/50 transition-all"
+                    className="px-6 py-2.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40"
                   >
-                    Login
+                    Get Started
                   </a>
                 </div>
               </div>
             </div>
           </nav>
 
-          {/* Main Content */}
-          <main className="pt-16">
+          <main className="pt-20">
             {children}
           </main>
         </Providers>
