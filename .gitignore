@@ -1,3 +1,6 @@
-node_modules
-.next
-.env
+﻿node_modules/
+.next/
+.env*
+.vercel/
+*.log
+.DS_Store
