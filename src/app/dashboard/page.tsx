@@ -29,9 +29,9 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {/* Placeholder for Enrolled Courses */}
-                    <div className="glass-card p-8 rounded-2xl relative overflow-hidden group">
+                    <div className="glass-card p-8 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-colors">
                         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <svg className="w-24 h-24 text-cyber-blue" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                            <svg className="w-16 h-16 text-cyber-blue" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
                         </div>
                         <h2 className="text-2xl font-bold mb-4">My Learning Path</h2>
                         <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">

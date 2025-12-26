@@ -10,9 +10,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${inter.className} min-h-screen text-white antialiased`}>
         <Providers>
           <nav className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center transition-all duration-300 bg-deep-space/60 backdrop-blur-xl border-b border-white/5">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4">
               {/* Logo */}
-              <div className="w-12 h-12 relative flex-shrink-0">
+              <div className="w-10 h-10 relative flex-shrink-0">
                 <img
                   src="/logo.png"
                   alt="Apollo Technologies"
@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
               <div className="flex flex-col justify-center">
                 <span className="text-[10px] text-gray-400 tracking-[0.2em] uppercase font-semibold">Apollo Technologies US</span>
-                <h1 className="text-xl md:text-2xl font-bold tracking-tighter text-white">
+                <h1 className="text-lg md:text-xl font-bold tracking-tighter text-white">
                   PROMPT <span className="text-cyber-blue">ENGINEERING</span>
                 </h1>
               </div>
