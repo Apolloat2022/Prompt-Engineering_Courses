@@ -9,7 +9,7 @@ interface Question {
     id: number;
     text: string;
     options: string[];
-    correct: number; // Index of correct answer
+    correct: number;
 }
 
 interface Module {
@@ -17,8 +17,8 @@ interface Module {
     title: string;
     type: string;
     duration: string;
-    videoUrl?: string;
-    quiz?: Question[]; // Array of questions
+    videoUrl?: string; // Unique URL
+    quiz?: Question[];
 }
 
 interface Week {
@@ -32,7 +32,7 @@ interface CourseData {
     weeks: Week[];
 }
 
-// Mock Data - Updated with UNIQUE videos and MULTIPLE questions
+// Mock Data - Truly Unique Content & Quizzes
 const courseData: CourseData = {
     title: "AI Communication Fundamentals",
     weeks: [
@@ -45,13 +45,13 @@ const courseData: CourseData = {
                     title: "1.1 LLM Perspective",
                     type: "video",
                     duration: "10m",
-                    videoUrl: "https://www.youtube.com/embed/zjkBMFhNj_g", // Intro to LLMs
+                    videoUrl: "https://www.youtube.com/embed/5sLYAQS9sWQ", // IBM: How Large Language Models Work
                     quiz: [
-                        { id: 1, text: "What generates the output in an LLM?", options: ["A database lookup", "Probabilistic token prediction", "A Google search", "Fixed rules"], correct: 1 },
-                        { id: 2, text: "What is a 'context window'?", options: ["The screen size", "The amount of text the model can process at once", "The training timeframe", "A pop-up ad"], correct: 1 },
-                        { id: 3, text: "Are LLMs deterministic by default?", options: ["Yes, always", "No, they are probabilistic", "Only on Tuesdays", "Yes, if temperature is 1"], correct: 1 },
-                        { id: 4, text: "What is 'Hallucination'?", options: ["A visual effect", "Confident but incorrect generation", "A virus", "A new feature"], correct: 1 },
-                        { id: 5, text: "Which architecture powers most modern LLMs?", options: ["RNN", "LSTM", "Transformer", "CNN"], correct: 2 }
+                        { id: 1, text: "What represents the 'knowledge' in an LLM?", options: ["The internet connection", "The parameters (weights) learned during training", "A SQL database", "The user's input"], correct: 1 },
+                        { id: 2, text: "LLMs are fundamentally prediction engines for what?", options: ["Stock prices", "Next tokens (words)", "Weather", "Truth"], correct: 1 },
+                        { id: 3, text: "Do LLMs 'understand' text like humans?", options: ["Yes, exactly like humans", "No, they process statistical patterns", "Yes, they have consciousness", "Only if paid"], correct: 1 },
+                        { id: 4, text: "What is 'Pre-training'?", options: ["Learning from massive datasets", "Learning from user feedback", "The time before training", "Installing Python"], correct: 0 },
+                        { id: 5, text: "Can LLMs hallucinate?", options: ["No, never", "Yes, they can generate confident falsehoods", "Only on outdated hardware", "Only in zero-shot mode"], correct: 1 }
                     ]
                 },
                 {
@@ -59,13 +59,13 @@ const courseData: CourseData = {
                     title: "1.2 First Contact",
                     type: "video",
                     duration: "15m",
-                    videoUrl: "https://www.youtube.com/embed/_ZvnD7N7p2w", // Prompt Engineering Basics
+                    videoUrl: "https://www.youtube.com/embed/_ZvnD7N7p2w", // Prompt Engineering Tutorial (Basics)
                     quiz: [
-                        { id: 1, text: "What is a 'Prompt'?", options: ["A command line", "The input given to the AI", "A quick reply", "A notification"], correct: 1 },
-                        { id: 2, text: "Which is better?", options: ["Write a story", "Write a 500-word sci-fi story about Mars", "Story time", "Tell me something"], correct: 1 },
-                        { id: 3, text: "What is Zero-Shot prompting?", options: ["Prompting without examples", "Prompting with 0 words", "Failed prompting", "Prompting with a gun"], correct: 0 },
-                        { id: 4, text: "What is Few-Shot prompting?", options: ["Giving a few examples", "Drinking a few shots", "Asking a few times", "Using short words"], correct: 0 },
-                        { id: 5, text: "Why is iteration important?", options: ["It isn't", "To refine the output towards the goal", "To waste time", "To confuse the AI"], correct: 1 }
+                        { id: 1, text: "What is the primary role of a Prompt Engineer?", options: ["To fix computers", "To craft inputs that guide AI effectively", "To write Python code", "To manage servers"], correct: 1 },
+                        { id: 2, text: "Which approach usually yields better results?", options: ["Vague questions", "Specific, structured instructions", "One word prompts", "Asking politely only"], correct: 1 },
+                        { id: 3, text: "What is 'Iterative Prompting'?", options: ["Asking once and giving up", "Refining the prompt based on output until success", "Repeating the same prompt", "Auto-looping"], correct: 1 },
+                        { id: 4, text: "Why is English often called the 'new programming language'?", options: ["It isn't", "Because we prompt models in natural language", "Because Python is dead", "Because compilers speak English"], correct: 1 },
+                        { id: 5, text: "Is the first output always the best?", options: ["Yes, AI is perfect", "No, refinement is often needed", "Only for GPT-4", "Depends on the weather"], correct: 1 }
                     ]
                 }
             ]
@@ -79,13 +79,13 @@ const courseData: CourseData = {
                     title: "2.1 Anatomy of a Prompt",
                     type: "video",
                     duration: "12m",
-                    videoUrl: "https://www.youtube.com/embed/jKrj0j9H19u", // Anatomy/DeepLearningAI style
+                    videoUrl: "https://www.youtube.com/embed/jKrj0j9H19u", // Focus on Prompt Components
                     quiz: [
-                        { id: 1, text: "What is the 'Persona' element?", options: ["Does not exist", "Assigning a role to the AI", "Your user profile", "The AI's name"], correct: 1 },
-                        { id: 2, text: "Why provide 'Constraints'?", options: ["To limit creativity", "To focus the output and avoid errors", "To make it faster", "To save money"], correct: 1 },
-                        { id: 3, text: "What is 'Output Format'?", options: ["File size", "The structure of the response (e.g., JSON, List)", "The font", "The color"], correct: 1 },
-                        { id: 4, text: "What is 'Context'?", options: ["Background information", "The text around the cursor", "The history", "All of the above"], correct: 3 },
-                        { id: 5, text: "Which component is optional?", options: ["Instruction", "Persona", "They are all mandatory", "None"], correct: 1 }
+                        { id: 1, text: "Which element sets the AI's behavior?", options: ["Context", "Persona / Role", "Task", "Output Format"], correct: 1 },
+                        { id: 2, text: "Why include 'Output Format' in a prompt?", options: ["To confuse the AI", "To ensure the response structure matches your needs (e.g., Table, List)", "To save tokens", "To make it look cool"], correct: 1 },
+                        { id: 3, text: "What does 'Context' provide?", options: ["The goal", "Background information to constrain the solution space", "The output", "The format"], correct: 1 },
+                        { id: 4, text: "If you want a 50-word summary, which component is that?", options: ["Constraint", "Persona", "Context", "Input Data"], correct: 0 },
+                        { id: 5, text: "Are all components required for every prompt?", options: ["Yes, strict rule", "No, but they help complexity", "No, only specific ones exist", "Only context matters"], correct: 1 }
                     ]
                 },
                 {
@@ -93,13 +93,13 @@ const courseData: CourseData = {
                     title: "2.2 Essential Patterns",
                     type: "video",
                     duration: "20m",
-                    videoUrl: "https://www.youtube.com/embed/b-Qe_Tdw4oY", // Patterns
+                    videoUrl: "https://www.youtube.com/embed/b-Qe_Tdw4oY", // Advanced Patterns
                     quiz: [
-                        { id: 1, text: "What does the 'Persona Pattern' do?", options: ["Sets the AI's perspective", "Changes the font", "Deletes the chat", "Encrypts the prompt"], correct: 0 },
-                        { id: 2, text: "What is the 'Recipe Pattern'?", options: ["For cooking only", "Knowing steps and goal to generate procedure", "Random generation", "Binary code"], correct: 1 },
-                        { id: 3, text: "What is 'Chain of Thought'?", options: ["A necklace", "Asking AI to explain its reasoning step-by-step", "A connection error", "A blockchain term"], correct: 1 },
-                        { id: 4, text: "When to use 'Ask me questions' pattern?", options: ["When you know everything", "When you want the AI to clarify requirements", "Never", "For fun"], correct: 1 },
-                        { id: 5, text: "Do patterns guarantee results?", options: ["Yes, 100%", "No, but they improve consistency", "No idea", "They make it worse"], correct: 1 }
+                        { id: 1, text: "The 'Persona Pattern' uses which key instruction?", options: ["Act as...", "Write a...", "Translate to...", "Summarize..."], correct: 0 },
+                        { id: 2, text: "The 'Recipe Pattern' is best for?", options: ["Food", "Generative step-by-step procedures", "Writing poems", "Coding"], correct: 1 },
+                        { id: 3, text: "What does 'Chain of Thought' encourage?", options: ["Speed", "Reasoning transparency", "Short answers", "Randomness"], correct: 1 },
+                        { id: 4, text: "In the 'Flipped Interaction' pattern, who asks the questions?", options: ["The User", "The AI", "The Developer", "Nobody"], correct: 1 },
+                        { id: 5, text: "Why use patterns?", options: ["To memorize names", "To standardize effective strategies for recurring problems", "They are mandatory", "To avoid typing"], correct: 1 }
                     ]
                 }
             ]
@@ -147,16 +147,9 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
     };
 
     const finishQuiz = () => {
-        // We need to calculate pass based on the score AFTER the last update. 
-        // Since setScore is async, we can't trust 'score' immediately here if we just updated it.
-        // However, for simplicity in this flow, passing logic:
-        // Actually, let's defer the check to the render or use an effect, 
-        // BUT simplest is: calculate final score in handleAnswer or check in render.
-        // We'll trust the state update sequence for granular steps or check in the UI.
         setQuizFinished(true);
     };
 
-    // Calculate pass status on render when finished
     const finalScore = score;
     const totalQuestions = activeModule.quiz?.length || 0;
     const percentage = totalQuestions > 0 ? (finalScore / totalQuestions) * 100 : 0;
@@ -318,50 +311,85 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                             </div>
                         )}
 
-                        {/* Lesson Text (Always visible unless taking quiz maybe? Let's keep it visible for reference) */}
+                        {/* Lesson Text */}
                         {!showQuiz && !quizFinished && (
                             <div className="prose prose-invert max-w-none">
                                 <h2 className="text-2xl font-bold text-white mb-4">Lesson Overview</h2>
                                 <p className="text-gray-400 leading-relaxed mb-6">
                                     In this module, we explore the core concepts required for effective interaction with Large Language Models.
                                 </p>
-                                {/* ... generic lesson content serves as placeholder ... */}
                             </div>
                         )}
                     </div>
                 </div>
 
-                {/* Certificate Modal */}
+                {/* Certificate Modal - Modern & Branded */}
                 {showCertificate && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
-                        <div className="bg-[#0a0e27] border border-cyan-500/30 p-8 rounded-2xl max-w-2xl w-full text-center relative shadow-[0_0_50px_rgba(6,182,212,0.2)]">
-                            <button onClick={() => setShowCertificate(false)} className="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-in fade-in duration-500">
+                        <div className="bg-gradient-to-br from-[#0f1535] to-[#0a0e27] border border-cyan-500/50 p-10 rounded-xl max-w-3xl w-full text-center relative shadow-[0_0_80px_rgba(6,182,212,0.15)] flex flex-col items-center">
+                            <button onClick={() => setShowCertificate(false)} className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">✕</button>
 
-                            <div className="mb-6 flex justify-center">
-                                <div className="w-20 h-20 rounded-full bg-cyan-500/10 flex items-center justify-center border border-cyan-500/50">
-                                    <span className="text-4xl">🏆</span>
+                            {/* Certificate Content */}
+                            <div className="border-[1px] border-white/10 p-2 w-full">
+                                <div className="border-[1px] border-white/10 p-12 bg-white/[0.02] relative overflow-hidden">
+                                    {/* Background watermark */}
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
+
+                                    {/* Header Logo */}
+                                    <div className="flex flex-col items-center gap-4 mb-8">
+                                        <div className="h-16 w-16 relative">
+                                            <img src="/logo.png" alt="Apollo Logo" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]" />
+                                        </div>
+                                        <h2 className="text-xl uppercase tracking-[0.3em] text-cyan-500 font-light">Apollo Technologies US</h2>
+                                    </div>
+
+                                    <h1 className="text-4xl md:text-5xl font-serif text-white mb-6 tracking-wide">Certificate of Completion</h1>
+
+                                    <p className="text-gray-400 text-sm uppercase tracking-widest mb-4">This certifies that</p>
+
+                                    <div className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 to-blue-400 mb-8 font-script border-b border-white/10 pb-4 inline-block px-12 min-w-[300px]">
+                                        Student Name
+                                    </div>
+
+                                    <p className="text-gray-300 mb-2 font-light">Has successfully demonstrated proficiency in the module</p>
+                                    <p className="text-xl font-medium text-white mb-12">{activeModule.title}</p>
+
+                                    <div className="flex justify-between items-end w-full px-8 mt-12">
+                                        <div className="text-left">
+                                            <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">Date</p>
+                                            <p className="text-sm text-gray-300 font-mono">{new Date().toLocaleDateString()}</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="mb-2">
+                                                <span className="font-handwriting text-2xl text-cyan-400 block -rotate-3 transform origin-bottom-right" style={{ fontFamily: 'cursive' }}>Robin Pandey</span>
+                                            </div>
+                                            <div className="h-px w-40 bg-white/20 mb-2"></div>
+                                            <p className="text-xs text-gray-500 uppercase tracking-wider">Robin Pandey, CEO</p>
+                                            <p className="text-xs text-cyan-500/50 uppercase tracking-widest">Apollo Technologies US</p>
+                                        </div>
+                                    </div>
+
+                                    {/* ID Badge */}
+                                    <div className="absolute top-6 right-6 opacity-30">
+                                        <p className="text-[9px] font-mono border border-white/20 px-2 py-0.5 rounded">ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <h2 className="text-3xl font-bold text-white mb-2">Detailed Certification</h2>
-                            <p className="text-gray-400 mb-8">Official Record of Competence</p>
-
-                            <div className="border-4 border-double border-white/10 p-8 bg-white/5 rounded-lg mb-8 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 p-2 text-[10px] text-gray-600 font-mono">ID: {Math.random().toString(36).substr(2, 9).toUpperCase()}</div>
-                                <h3 className="text-2xl font-serif text-cyan-400 mb-4">Certificate of Mastery</h3>
-                                <p className="text-sm text-gray-300 mb-2">This acknowledges that</p>
-                                <p className="text-xl font-bold text-white mb-4 border-b border-white/20 inline-block px-8 pb-1">Learner</p>
-                                <p className="text-sm text-gray-300">has achieved a score of <span className="text-cyan-400 font-bold">{percentage}%</span> in</p>
-                                <p className="text-lg font-bold text-cyan-300 mt-1">{activeModule.title}</p>
-                                <p className="text-xs text-gray-500 mt-4">{new Date().toLocaleDateString()}</p>
+                            <div className="mt-8 flex gap-4">
+                                <button
+                                    onClick={() => window.print()}
+                                    className="px-6 py-2 bg-white/5 hover:bg-white/10 text-white text-sm font-medium rounded-lg transition-colors border border-white/10"
+                                >
+                                    Print / Save PDF
+                                </button>
+                                <button
+                                    onClick={() => { setShowCertificate(false); router.push('/dashboard'); }}
+                                    className="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-sm font-bold rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all"
+                                >
+                                    Return to Dashboard
+                                </button>
                             </div>
-
-                            <button
-                                onClick={() => { setShowCertificate(false); router.push('/dashboard'); }}
-                                className="px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg shadow-lg hover:shadow-cyan-500/25 transition-all"
-                            >
-                                Return to Dashboard
-                            </button>
                         </div>
                     </div>
                 )}
