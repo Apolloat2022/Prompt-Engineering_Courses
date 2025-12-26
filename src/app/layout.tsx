@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <nav className="fixed top-0 w-full z-50 bg-[#0a0e27]/95 backdrop-blur-md border-b border-white/[0.08]">
             <div className="max-w-[1400px] mx-auto px-8">
               <div className="flex items-center justify-between h-20">
-                {/* Logo & Brand - Properly Sized */}
+                {/* Logo & Brand */}
                 <a href="/" className="flex items-center gap-4 group">
                   <div className="relative w-12 h-12 flex-shrink-0 rounded-xl overflow-hidden ring-1 ring-cyan-500/30 group-hover:ring-cyan-500/60 transition-all duration-300">
                     <Image
