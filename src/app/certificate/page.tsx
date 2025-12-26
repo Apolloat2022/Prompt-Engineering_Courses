@@ -4,7 +4,18 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { useSession } from 'next-auth/react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
+import { Great_Vibes, Dancing_Script } from 'next/font/google';
+
+// Load Fonts
+const greatVibes = Great_Vibes({
+    subsets: ['latin'],
+    weight: ['400']
+});
+
+const dancingScript = Dancing_Script({
+    subsets: ['latin'],
+    weight: ['400', '700']
+});
 
 function CertificateContent() {
     const { data: session } = useSession();
@@ -80,7 +91,7 @@ function CertificateContent() {
                     <p className="text-gray-500 text-sm mt-8 mb-4">This Certificate Is Proudly Presented To</p>
 
                     {/* Name */}
-                    <div className="font-cursive text-7xl text-[#1e3a8a] mb-8" style={{ fontFamily: 'Brush Script MT, cursive' }}>
+                    <div className={`${greatVibes.className} text-7xl text-[#1e3a8a] mb-8`}>
                         {studentName}
                     </div>
 
@@ -107,8 +118,8 @@ function CertificateContent() {
                     {/* Signature */}
                     <div className="text-center">
                         <div className="w-64 border-b-2 border-gray-600 pb-2 mb-2 relative flex justify-center items-end h-16">
-                            {/* Signature Image or Text */}
-                            <span className="font-cursive text-4xl text-[#1e3a8a] -rotate-6 absolute bottom-4" style={{ fontFamily: 'Brush Script MT, cursive' }}>Robin Pandey</span>
+                            {/* Signature Text */}
+                            <span className={`${dancingScript.className} text-4xl text-[#1e3a8a] -rotate-6 absolute bottom-4 font-bold`}>Robin Pandey</span>
                         </div>
                         <p className="font-serif text-xl text-[#1e3a8a]">Robin Pandey</p>
                         <p className="text-[10px] uppercase tracking-widest text-gray-500">Chief Executive Officer</p>
