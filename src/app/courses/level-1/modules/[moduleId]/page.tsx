@@ -16,7 +16,7 @@ interface Module {
     title: string;
     type: string;
     duration: string;
-    videoUrl?: string;
+    videoUrl?: string; // Optional but we will populate all
     quiz?: Quiz;
 }
 
@@ -31,7 +31,7 @@ interface CourseData {
     weeks: Week[];
 }
 
-// Mock Data
+// Mock Data - Updated with UNIQUE videos
 const courseData: CourseData = {
     title: "AI Communication Fundamentals",
     weeks: [
@@ -44,7 +44,7 @@ const courseData: CourseData = {
                     title: "1.1 LLM Perspective",
                     type: "video",
                     duration: "10m",
-                    videoUrl: "https://www.youtube.com/embed/zjkBMFhNj_g",
+                    videoUrl: "https://www.youtube.com/embed/zjkBMFhNj_g", // Intro to AI/LLMs
                     quiz: {
                         question: "What is the primary function of an LLM?",
                         options: ["To think like a human", "To predict the next token", "To search the internet", "To executing python code only"],
@@ -56,7 +56,7 @@ const courseData: CourseData = {
                     title: "1.2 First Contact",
                     type: "video",
                     duration: "15m",
-                    videoUrl: "https://www.youtube.com/embed/jKrj0j9H19u",
+                    videoUrl: "https://www.youtube.com/embed/jKrj0j9H19u", // Prompt Engineering Basics
                     quiz: {
                         question: "Which of the following is NOT a component of a prompt?",
                         options: ["Context", "Instruction", "Input Data", "Compiler Settings"],
@@ -69,8 +69,30 @@ const courseData: CourseData = {
             id: 2,
             title: "Week 2: Core Principles",
             modules: [
-                { id: "2.1", title: "2.1 Anatomy of a Prompt", type: "video", duration: "12m", videoUrl: "https://www.youtube.com/embed/_ZvnD7N7p2w" },
-                { id: "2.2", title: "2.2 Essential Patterns", type: "video", duration: "20m", videoUrl: "" }
+                {
+                    id: "2.1",
+                    title: "2.1 Anatomy of a Prompt",
+                    type: "video",
+                    duration: "12m",
+                    videoUrl: "https://www.youtube.com/embed/_ZvnD7N7p2w", // Prompt Engineering Guide
+                    quiz: {
+                        question: "What is the most important part of a prompt?",
+                        options: ["The length", "The clarity of instruction", "The polite language", "The punctuation"],
+                        correct: 1
+                    }
+                },
+                {
+                    id: "2.2",
+                    title: "2.2 Essential Patterns",
+                    type: "video",
+                    duration: "20m",
+                    videoUrl: "https://www.youtube.com/embed/b-Qe_Tdw4oY", // Advanced Prompt Patterns
+                    quiz: {
+                        question: "Which pattern helps the AI adopt a specific role?",
+                        options: ["Persona Pattern", "Recipe Pattern", "Template Pattern", "Flipped Interaction"],
+                        correct: 0
+                    }
+                }
             ]
         }
     ]
@@ -94,14 +116,12 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
     const handleQuizSubmit = (optionIndex: number) => {
         if (activeModule.quiz && optionIndex === activeModule.quiz.correct) {
             setQuizCompleted(true);
-            // alert("Correct! You passed the quiz.");
         } else {
             alert("Incorrect. Try again!");
         }
     };
 
     const handleComplete = () => {
-        // Demo logic: if on the last implemented module or user wants to finish
         setShowCertificate(true);
     };
 
