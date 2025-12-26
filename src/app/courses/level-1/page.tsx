@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 const weeks = [
@@ -39,17 +41,24 @@ export default function LevelOne() {
                 </div>
 
                 <div className="space-y-4">
-                  {week.modules.map((mod, idx) => (
-                    <div key={idx} className="flex items-center gap-4 text-gray-400 group-hover:text-gray-200 transition-colors bg-black/20 p-3 rounded-lg border border-white/5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 box-shadow-cyan" />
-                      <span className="text-sm font-medium">{mod}</span>
-                    </div>
-                  ))}
+                  {week.modules.map((mod, idx) => {
+                    // Extract module ID (e.g., "1.1" from "1.1 LLM Perspective")
+                    const modId = mod.split(' ')[0];
+                    return (
+                      <div key={idx} className="flex items-center justify-between text-gray-400 group-hover:text-gray-200 transition-colors bg-black/20 p-3 rounded-lg border border-white/5 hover:bg-white/5 cursor-pointer">
+                        <div className="flex items-center gap-4">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 box-shadow-cyan" />
+                          <span className="text-sm font-medium">{mod}</span>
+                        </div>
+                        <a href={`/courses/level-1/modules/${modId}`} className="text-xs text-cyan-400 hover:text-white px-3 py-1 bg-cyan-500/10 rounded-full transition-all">Start</a>
+                      </div>
+                    );
+                  })}
                 </div>
 
-                <button className="mt-8 w-full py-4 rounded-xl bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border border-cyan-500/20 text-cyan-400 font-semibold group-hover:bg-cyan-500 group-hover:text-black transition-all duration-300">
-                  Start Module
-                </button>
+                <a href={`/courses/level-1/modules/${week.modules[0].split(' ')[0]}`} className="block mt-8 w-full py-4 text-center rounded-xl bg-gradient-to-r from-cyan-500/10 to-blue-600/10 border border-cyan-500/20 text-cyan-400 font-semibold group-hover:bg-cyan-500 group-hover:text-black transition-all duration-300">
+                  Start Week {week.id}
+                </a>
               </div>
             </div>
           ))}
