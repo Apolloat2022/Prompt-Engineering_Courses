@@ -2,6 +2,11 @@
 import { signIn } from 'next-auth/react';
 
 export default function Login() {
+  const handleGoogleSignIn = () => {
+    console.log('Button clicked!');
+    signIn('google', { callbackUrl: '/' });
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="glass-card p-8 max-w-md w-full">
@@ -9,8 +14,9 @@ export default function Login() {
         <p className="text-gray-400 text-center mb-8">Sign in to access your courses</p>
         
         <button
-          onClick={() => signIn('google', { callbackUrl: '/' })}
-          className="w-full bg-white text-gray-900 py-3 px-4 rounded-lg font-medium hover:bg-gray-100 transition flex items-center justify-center gap-3"
+          onClick={handleGoogleSignIn}
+          type="button"
+          className="w-full bg-white text-gray-900 py-3 px-4 rounded-lg font-medium hover:bg-gray-100 transition flex items-center justify-center gap-3 cursor-pointer"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
