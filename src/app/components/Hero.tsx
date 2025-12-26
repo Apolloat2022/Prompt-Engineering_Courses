@@ -34,16 +34,15 @@ export function Hero() {
                 >
                     Transform your AI workflows with expert-level prompting techniques
                 </motion.p>
-                <motion.button
+                <motion.div
                     initial={{ y: 50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.6 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 bg-cyber-blue text-deep-space rounded-lg font-bold text-lg"
                 >
-                    Start Learning
-                </motion.button>
+                    <a href="/login" className="inline-block px-8 py-4 bg-cyber-blue text-deep-space rounded-lg font-bold text-lg hover:scale-105 transition-transform">
+                        Start Learning
+                    </a>
+                </motion.div>
             </div>
         </motion.section>
     );
