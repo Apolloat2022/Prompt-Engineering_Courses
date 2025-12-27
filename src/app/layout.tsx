@@ -1,6 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { Providers } from './providers';
+import { Logo } from './components/Logo';
 
 import type { Metadata } from 'next';
 
@@ -21,23 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="max-w-[1400px] mx-auto px-8">
               <div className="flex items-center justify-between h-32">
                 {/* Logo & Brand */}
-                <a href="/" className="flex items-center gap-6 group">
-                  <div className="relative h-28 w-28 flex-shrink-0 transition-transform duration-300 group-hover:scale-105">
-                    <img
-                      src="/logo.png"
-                      alt="Apollo Technologies"
-                      className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(6,182,212,0.6)]"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <span className="text-sm tracking-[0.2em] text-gray-500 font-medium uppercase">
-                      Apollo Technologies
-                    </span>
-                    <span className="text-2xl font-bold tracking-tight bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent">
-                      Prompt Engineering
-                    </span>
-                  </div>
-                </a>
+                <Logo />
 
                 {/* Navigation Links */}
                 <div className="flex items-center gap-8">
