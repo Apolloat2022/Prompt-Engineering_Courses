@@ -53,28 +53,28 @@ function CertificateContent() {
                 <div className="absolute bottom-0 left-0 w-0 h-0 border-b-[180px] border-l-[180px] border-b-transparent border-l-[#1e3a8a] z-10"></div>
                 <div className="absolute bottom-0 left-0 w-0 h-0 border-b-[130px] border-l-[130px] border-b-transparent border-l-[#ca8a04] z-20"></div>
 
-                {/* Header */}
-                <div className="pt-16 px-20 flex justify-between items-start relative z-30">
-                    {/* Logo - Updated with logo.png */}
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 flex items-center justify-center">
-                            <img 
-                                src="/logo.png" 
-                                alt="Apollo Technologies Logo" 
-                                className="w-full h-full object-contain"
-                            />
-                        </div>
-                        <div>
-                            <h3 className="font-bold text-[#1e3a8a] text-lg tracking-wide">APOLLO</h3>
-                            <p className="text-[10px] tracking-widest text-gray-500 uppercase">Technologies US</p>
-                        </div>
-                    </div>
+               {/* Header */}
+<div className="pt-16 px-20 flex justify-between items-start relative z-30">
+    {/* Logo - 3 times bigger (image only) */}
+    <div className="flex items-center gap-3">
+        <div className="w-36 h-36 flex items-center justify-center">
+            <img 
+                src="/logo.png" 
+                alt="Apollo Technologies Logo" 
+                className="w-full h-full object-contain"
+            />
+        </div>
+        <div>
+            <h3 className="font-bold text-[#1e3a8a] text-lg tracking-wide">APOLLO</h3>
+            <p className="text-[10px] tracking-widest text-gray-500 uppercase">Technologies US</p>
+        </div>
+    </div>
 
-                    <div className="text-right">
-                        <h2 className="text-2xl font-bold tracking-widest text-[#1e3a8a]">BUILDFOLIO</h2>
-                        <p className="text-[10px] uppercase tracking-[0.2em] text-[#ca8a04]">Official Certification</p>
-                    </div>
-                </div>
+    <div className="text-right">
+        <h2 className="text-2xl font-bold tracking-widest text-[#1e3a8a]">BUILDFOLIO</h2>
+        <p className="text-[10px] uppercase tracking-[0.2em] text-[#ca8a04]">Official Certification</p>
+    </div>
+</div>
 
                 {/* Main Content */}
                 <div className="flex-1 flex flex-col items-center justify-center text-center px-16 relative z-30 mt-[-20px]">
