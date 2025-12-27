@@ -3,28 +3,28 @@ import Image from 'next/image';
 export default function HomePage() {
   const courses = [
     {
-      level: "Beginner",
-      title: "Prompt Fundamentals",
-      description: "Master the core principles of effective prompting and learn to communicate with AI models efficiently.",
-      icon: "🎯",
-      color: "from-emerald-500 to-green-600",
+      level: "Level 1",
+      title: "AI Communication Fundamentals",
+      description: "Master the core principles of effective prompting, from zero-shot to chain-of-thought strategies.",
+      icon: "🚀",
+      color: "from-cyan-500 to-blue-600",
       link: "/courses/level-1"
     },
     {
-      level: "Advanced",
-      title: "Advanced Techniques",
-      description: "Explore chain-of-thought reasoning, few-shot learning, and sophisticated prompting strategies.",
-      icon: "🚀",
+      level: "Level 2",
+      title: "Agentic Workflows",
+      description: "Build autonomous agents and RAG pipelines. Learn to orchestrate complex AI behaviors.",
+      icon: "🤖",
       color: "from-purple-500 to-pink-600",
-      link: "/courses/level-1" // pointing to same for demo
+      link: "/courses/level-2"
     },
     {
-      level: "Intermediate",
-      title: "AI Workflows",
-      description: "Build complex automation pipelines and integrate AI into your production environment.",
-      icon: "⚡",
-      color: "from-cyan-500 to-blue-600",
-      link: "/courses/level-1" // pointing to same for demo
+      level: "Tool",
+      title: "AI Prompt Sandbox",
+      description: "Test and score your prompts against our heuristic engine. Get real-time feedback.",
+      icon: "🧪",
+      color: "from-pink-500 to-rose-600",
+      link: "/sandbox"
     }
   ];
 
@@ -99,8 +99,8 @@ export default function HomePage() {
               </div>
               <div className="w-px h-8 bg-white/10" />
               <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold text-white">12</span>
-                <span>Courses</span>
+                <span className="text-2xl font-bold text-white">1</span>
+                <span>Comprehensive Course</span>
               </div>
             </div>
           </div>
@@ -116,7 +116,7 @@ export default function HomePage() {
               Learn at Your Own Pace
             </h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Choose from our curated selection of courses designed for all skill levels
+              Choose from our curated selection of courses and tools.
             </p>
           </div>
 
@@ -148,10 +148,10 @@ export default function HomePage() {
 
                 {/* CTA Link */}
                 <a
-                  href={course.link || "/courses/level-1"}
+                  href={course.link}
                   className="inline-flex items-center gap-2 text-cyan-400 font-medium group-hover:gap-3 transition-all"
                 >
-                  <span>Explore Course</span>
+                  <span>{course.level === "Tool" ? "Try Tool" : "Explore Course"}</span>
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>

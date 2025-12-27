@@ -2,7 +2,9 @@
 
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { level1Curriculum } from '../../data/curriculum';
+import Link from 'next/link';
+import { level1Curriculum, level2Curriculum } from '../../data/curriculum';
+import { useProgress } from '../../hooks/useProgress';
 
 export default function Dashboard() {
     const { data: session, status } = useSession({
@@ -12,9 +14,21 @@ export default function Dashboard() {
         },
     });
 
+    const { progress, isModuleCompleted } = useProgress();
+
     if (status === 'loading') {
         return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
     }
+
+    // Calculate Level 1 Progress
+    const totalModulesL1 = level1Curriculum.weeks.flatMap(w => w.modules).length;
+    const completedCountL1 = level1Curriculum.weeks.flatMap(w => w.modules).filter(m => isModuleCompleted(m.id)).length;
+    const progressPercentL1 = Math.round((completedCountL1 / totalModulesL1) * 100);
+
+    // Calculate Level 2 Progress
+    const totalModulesL2 = level2Curriculum.weeks.flatMap(w => w.modules).length;
+    const completedCountL2 = level2Curriculum.weeks.flatMap(w => w.modules).filter(m => isModuleCompleted(m.id)).length;
+    const progressPercentL2 = Math.round((completedCountL2 / totalModulesL2) * 100);
 
     return (
         <div className="min-h-screen pt-32 px-8 bg-[url('/grid.svg')] bg-fixed bg-center">
@@ -22,7 +36,7 @@ export default function Dashboard() {
                 <div className="flex items-end justify-between mb-12">
                     <div>
                         <h1 className="text-5xl font-bold mb-2">
-                            Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-purple-500">{session?.user?.name}</span>
+                            Welcome back, <Link href="/profile" className="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-purple-500 hover:opacity-80 transition-opacity">{session?.user?.name}</Link>
                         </h1>
                         <p className="text-gray-400 text-lg">Ready to continue your journey into AI mastery?</p>
                     </div>
@@ -46,8 +60,13 @@ export default function Dashboard() {
                             {level1Curriculum.title}
                         </h2>
 
+                        <div className="flex justify-between text-xs text-gray-400 mb-2 font-mono">
+                            <span>{completedCountL1} / {totalModulesL1} MODULES</span>
+                            <span>{progressPercentL1}%</span>
+                        </div>
+
                         <div className="w-full bg-gray-700 h-1.5 rounded-full mb-4 overflow-hidden">
-                            <div className="bg-cyan-500 h-full w-[15%] shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div>
+                            <div className="bg-cyan-500 h-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(6,182,212,0.5)]" style={{ width: `${progressPercentL1}%` }}></div>
                         </div>
 
                         <p className="text-sm text-gray-400 mb-6 line-clamp-2">
@@ -60,23 +79,60 @@ export default function Dashboard() {
                         </a>
                     </div>
 
-                    {/* Coming Soon Card */}
-                    <div className="glass-card p-6 rounded-2xl relative overflow-hidden opacity-50 grayscale border border-white/5">
-                        <div className="absolute top-0 right-0 p-4 opacity-10">
-                            <span className="text-4xl">🔒</span>
+                    {/* Level 2 Course Card (Unlocked) */}
+                    <div className="glass-card p-6 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-all border border-purple-500/20 hover:border-purple-500/50">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <span className="text-4xl">🤖</span>
+                        </div>
+
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="px-2 py-1 rounded-md bg-purple-500/10 text-purple-400 text-[10px] font-bold uppercase tracking-wider border border-purple-500/20">
+                                {level2Curriculum.level}
+                            </span>
+                            <span className="text-xs text-gray-500">Advanced</span>
+                        </div>
+
+                        <h2 className="text-xl font-bold mb-2 group-hover:text-purple-400 transition-colors">
+                            {level2Curriculum.title}
+                        </h2>
+
+                        <div className="flex justify-between text-xs text-gray-400 mb-2 font-mono">
+                            <span>{completedCountL2} / {totalModulesL2} MODULES</span>
+                            <span>{progressPercentL2}%</span>
+                        </div>
+
+                        <div className="w-full bg-gray-700 h-1.5 rounded-full mb-4 overflow-hidden">
+                            <div className="bg-purple-500 h-full transition-all duration-1000 ease-out shadow-[0_0_10px_rgba(168,85,247,0.5)]" style={{ width: `${progressPercentL2}%` }}></div>
+                        </div>
+
+                        <p className="text-sm text-gray-400 mb-6 line-clamp-2">
+                            Build autonomous agents and RAG pipelines. Learn to orchestrate complex AI behaviors.
+                        </p>
+
+                        <a href="/courses/level-2" className="flex items-center justify-between w-full py-3 px-4 bg-gradient-to-r from-purple-500/10 to-pink-600/10 border border-purple-500/20 text-purple-400 font-bold rounded-xl hover:from-purple-500 hover:to-pink-600 hover:text-white transition-all group-hover:shadow-lg group-hover:shadow-purple-500/20">
+                            <span>Start Level 2</span>
+                            <span className="group-hover:translate-x-1 transition-transform">→</span>
+                        </a>
+                    </div>
+
+                    {/* AI Sandbox Card */}
+                    <div className="glass-card p-6 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-all border border-pink-500/20 hover:border-pink-500/50">
+                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <span className="text-4xl">🧪</span>
                         </div>
                         <div className="flex items-center gap-3 mb-4">
-                            <span className="px-2 py-1 rounded-md bg-white/10 text-gray-400 text-[10px] font-bold uppercase tracking-wider border border-white/10">
-                                Intermediate
+                            <span className="px-2 py-1 rounded-md bg-pink-500/10 text-pink-400 text-[10px] font-bold uppercase tracking-wider border border-pink-500/20">
+                                Tool
                             </span>
                         </div>
-                        <h2 className="text-xl font-bold mb-2 text-gray-500">Level 2: Agentic Workflows</h2>
-                        <p className="text-sm text-gray-500 mb-6">
-                            Building autonomous agents and RAG pipelines.
+                        <h2 className="text-xl font-bold mb-2 group-hover:text-pink-400 transition-colors">AI Prompt Sandbox</h2>
+                        <p className="text-sm text-gray-400 mb-6">
+                            Test and score your prompts against our heuristic engine. Get real-time feedback.
                         </p>
-                        <button disabled className="w-full py-3 px-4 bg-white/5 text-gray-500 font-bold rounded-xl cursor-not-allowed text-sm">
-                            Locked
-                        </button>
+                        <a href="/sandbox" className="flex items-center justify-between w-full py-3 px-4 bg-white/5 text-pink-400 font-bold rounded-xl hover:bg-pink-600 hover:text-white transition-all">
+                            <span>Open Sandbox</span>
+                            <span>→</span>
+                        </a>
                     </div>
                 </div>
             </div>

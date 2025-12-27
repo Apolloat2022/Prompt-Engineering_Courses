@@ -6,12 +6,14 @@ import { useRouter } from 'next/navigation';
 import { useSession, signIn } from 'next-auth/react';
 
 import { level1Curriculum } from '../../../../../data/curriculum';
+import { useProgress } from '../../../../../hooks/useProgress';
 
 export default function ModulePlayer({ params }: { params: Promise<{ moduleId: string }> }) {
     const router = useRouter();
     const { data: session, status } = useSession();
     const resolvedParams = React.use(params);
     const activeModuleId = resolvedParams.moduleId || "1.1";
+    const { saveProgress, isModuleCompleted, getModuleScore } = useProgress();
 
     // Derived State
     const activeModule = level1Curriculum.weeks
@@ -29,6 +31,10 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
     const isAuthenticated = status === "authenticated";
     const isLoading = status === "loading";
 
+    // Progress
+    const isCompleted = isModuleCompleted(activeModuleId) || passed;
+    const bestScore = getModuleScore(activeModuleId);
+
     // Handlers
     const startQuiz = () => {
         if (!isAuthenticated) {
@@ -43,25 +49,37 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
     };
 
     const handleAnswer = (optionIndex: number) => {
+        let currentScore = score;
         if (activeModule.quiz && optionIndex === activeModule.quiz[currentQuestionIndex].correct) {
-            setScore(prev => prev + 1);
+            currentScore = score + 1;
+            setScore(currentScore);
         }
 
         if (activeModule.quiz && currentQuestionIndex < activeModule.quiz.length - 1) {
             setCurrentQuestionIndex(prev => prev + 1);
         } else {
-            finishQuiz();
+            finishQuiz(currentScore);
         }
     };
 
-    const finishQuiz = () => {
+    const finishQuiz = (finalScore: number) => {
+        const total = activeModule.quiz?.length || 1;
+        const percent = Math.round((finalScore / total) * 100);
+
         setQuizFinished(true);
+        if (percent >= 80) {
+            setPassed(true);
+            saveProgress(activeModuleId, percent);
+        }
     };
 
-    const finalScore = score;
-    const totalQuestions = activeModule.quiz?.length || 0;
-    const percentage = totalQuestions > 0 ? (finalScore / totalQuestions) * 100 : 0;
-    const isPassed = percentage >= 80;
+    const percentage = quizFinished ? Math.round((score / (activeModule.quiz?.length || 1)) * 100) : bestScore;
+    const isPassed = percentage >= 80 || isCompleted;
+
+    // Navigation Logic
+    const allModules = level1Curriculum.weeks.flatMap(w => w.modules);
+    const currentIndex = allModules.findIndex(m => m.id === activeModuleId);
+    const nextModule = allModules[currentIndex + 1];
 
     const handleRetake = () => {
         startQuiz();
@@ -73,9 +91,14 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
             alert("You need 80% to proceed!");
             return;
         }
-        // Redirect to certificate page with Specific Module Title
-        const uniqueId = "AP-" + Math.random().toString(36).substr(2, 9).toUpperCase();
-        router.push(`/certificate?course=${encodeURIComponent(activeModule.title)}&id=${uniqueId}`);
+
+        if (nextModule) {
+            router.push(`/courses/level-1/modules/${nextModule.id}`);
+        } else {
+            // Redirect to certificate page with Specific Module Title
+            const uniqueId = "AP-" + Math.random().toString(36).substr(2, 9).toUpperCase();
+            router.push(`/certificate?course=${encodeURIComponent(activeModule.title)}&id=${uniqueId}`);
+        }
     };
 
     if (isLoading) {
@@ -97,20 +120,26 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                         <div key={week.id}>
                             <h3 className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-3 px-2">{week.title}</h3>
                             <div className="space-y-1">
-                                {week.modules.map(module => (
-                                    <Link
-                                        key={module.id}
-                                        href={`/courses/level-1/modules/${module.id}`}
-                                        onClick={() => { setShowQuiz(false); setQuizFinished(false); }}
-                                        className={`flex items-center justify-between p-3 rounded-lg text-sm transition-all ${activeModuleId === module.id
-                                            ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
-                                            : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
-                                            }`}
-                                    >
-                                        <span>{module.title}</span>
-                                        <span className="text-xs opacity-50">{module.duration}</span>
-                                    </Link>
-                                ))}
+                                {week.modules.map(module => {
+                                    const isModComplete = isModuleCompleted(module.id);
+                                    return (
+                                        <Link
+                                            key={module.id}
+                                            href={`/courses/level-1/modules/${module.id}`}
+                                            onClick={() => { setShowQuiz(false); setQuizFinished(false); }}
+                                            className={`flex items-center justify-between p-3 rounded-lg text-sm transition-all ${activeModuleId === module.id
+                                                ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
+                                                : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                                                }`}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                {isModComplete && <span className="text-green-400 font-bold">✓</span>}
+                                                <span className={isModComplete ? "text-gray-300" : ""}>{module.title}</span>
+                                            </div>
+                                            <span className="text-xs opacity-50">{module.duration}</span>
+                                        </Link>
+                                    );
+                                })}
                             </div>
                         </div>
                     ))}
@@ -149,7 +178,7 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                                     : 'bg-gray-700 text-gray-400 cursor-not-allowed'
                                     }`}
                             >
-                                Get Certificate
+                                {nextModule ? "Next Lesson" : "Get Certificate"}
                             </button>
                         )}
                     </div>
@@ -242,7 +271,7 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                                     )}
                                     {isPassed && (
                                         <button onClick={handleContinue} className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 rounded-xl font-bold shadow-lg shadow-cyan-500/20 transition-all">
-                                            Get Certificate
+                                            {nextModule ? "Next Lesson" : "Get Certificate"}
                                         </button>
                                     )}
                                 </div>
