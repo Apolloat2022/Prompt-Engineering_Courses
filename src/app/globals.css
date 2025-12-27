@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -15,13 +21,14 @@ html {
 body {
   background: #0a0e27;
   /* Changed 'color: white' to use a CSS variable or a more flexible approach */
-  color: #ffffff; 
+  color: #ffffff;
   overflow-x: hidden;
 }
 
 /* Add a specific override for printable/white components */
 .bg-white {
-  color: #000000; /* This ensures anything with a white background defaults to black text */
+  color: #000000;
+  /* This ensures anything with a white background defaults to black text */
 }
 
 ::-webkit-scrollbar {
