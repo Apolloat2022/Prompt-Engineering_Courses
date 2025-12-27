@@ -1,16 +1,29 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function LoginButton() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+
   useEffect(() => {
     console.log('LoginButton mounted - hydration complete');
   }, []);
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     console.log('Button clicked! Initiating Google sign-in...');
-    signIn('google', { callbackUrl: '/dashboard' });
+    try {
+      const result = await signIn('google', { callbackUrl, redirect: true });
+      if (result?.error) {
+        console.error('Sign-in error:', result.error);
+        alert('Sign-in failed: ' + result.error);
+      }
+    } catch (error) {
+      console.error('Unexpected error during sign-in:', error);
+      alert('An unexpected error occurred. Please check console.');
+    }
   };
 
   return (
