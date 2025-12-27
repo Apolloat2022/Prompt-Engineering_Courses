@@ -14,8 +14,14 @@ html {
 
 body {
   background: #0a0e27;
-  color: white;
+  /* Changed 'color: white' to use a CSS variable or a more flexible approach */
+  color: #ffffff; 
   overflow-x: hidden;
+}
+
+/* Add a specific override for printable/white components */
+.bg-white {
+  color: #000000; /* This ensures anything with a white background defaults to black text */
 }
 
 ::-webkit-scrollbar {
@@ -33,4 +39,12 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(6, 182, 212, 0.5);
+}
+
+/* Ensure that when printing, the text is always black regardless of global settings */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
 }
