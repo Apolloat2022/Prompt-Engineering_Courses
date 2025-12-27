@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useSession, signIn } from 'next-auth/react';
 
 // Types
 interface Question {
@@ -18,6 +19,8 @@ interface Module {
     type: string;
     duration: string;
     videoUrl?: string; // Unique URL
+    description?: string; // NEW: Rich description
+    useCases?: string[]; // NEW: Practical applications
     quiz?: Question[];
 }
 
@@ -32,7 +35,7 @@ interface CourseData {
     weeks: Week[];
 }
 
-// Mock Data - Truly Unique Content & Quizzes
+// Mock Data - Expanded with Descriptions & Use Cases
 const courseData: CourseData = {
     title: "AI Communication Fundamentals",
     weeks: [
@@ -45,7 +48,13 @@ const courseData: CourseData = {
                     title: "1.1 LLM Perspective",
                     type: "video",
                     duration: "10m",
-                    videoUrl: "https://www.youtube.com/embed/5sLYAQS9sWQ", // IBM: How Large Language Models Work
+                    videoUrl: "https://www.youtube.com/embed/5sLYAQS9sWQ",
+                    description: "Understanding Large Language Models (LLMs) requires shifting your perspective from 'searching' to 'instructing'. In this module, we dissect how LLMs process information through tokenization and next-word prediction, demystifying the 'black box' of AI.",
+                    useCases: [
+                        "Explaining AI limitations to stakeholders",
+                        "Debugging unexpected model outputs",
+                        "Designing constraints for business applications"
+                    ],
                     quiz: [
                         { id: 1, text: "What represents the 'knowledge' in an LLM?", options: ["The internet connection", "The parameters (weights) learned during training", "A SQL database", "The user's input"], correct: 1 },
                         { id: 2, text: "LLMs are fundamentally prediction engines for what?", options: ["Stock prices", "Next tokens (words)", "Weather", "Truth"], correct: 1 },
@@ -59,7 +68,13 @@ const courseData: CourseData = {
                     title: "1.2 First Contact",
                     type: "video",
                     duration: "15m",
-                    videoUrl: "https://www.youtube.com/embed/_ZvnD7N7p2w", // Prompt Engineering Tutorial (Basics)
+                    videoUrl: "https://www.youtube.com/embed/_ZvnD7N7p2w",
+                    description: "Your first interaction with an LLM sets the tone for future success. This module covers the foundational syntax of effective prompting, the importance of clarity, and how to avoid the 'Garbage In, Garbage Out' trap.",
+                    useCases: [
+                        "Writing your first effective email drafter",
+                        "Summarizing complex meeting notes",
+                        "Translating natural language to code"
+                    ],
                     quiz: [
                         { id: 1, text: "What is the primary role of a Prompt Engineer?", options: ["To fix computers", "To craft inputs that guide AI effectively", "To write Python code", "To manage servers"], correct: 1 },
                         { id: 2, text: "Which approach usually yields better results?", options: ["Vague questions", "Specific, structured instructions", "One word prompts", "Asking politely only"], correct: 1 },
@@ -79,7 +94,13 @@ const courseData: CourseData = {
                     title: "2.1 Anatomy of a Prompt",
                     type: "video",
                     duration: "12m",
-                    videoUrl: "https://www.youtube.com/embed/jKrj0j9H19u", // Focus on Prompt Components
+                    videoUrl: "https://www.youtube.com/embed/jKrj0j9H19u",
+                    description: "A professional prompt isn't just a sentence; it's a structured object. We break down the four key components: Instruction, Context, Input Data, and Output Indicator. Mastering this anatomy is the difference between a junior and senior prompt engineer.",
+                    useCases: [
+                        "Creating reusable prompt templates for teams",
+                        "Standardizing AI outputs for software integration",
+                        "Reducing token usage while maintaining quality"
+                    ],
                     quiz: [
                         { id: 1, text: "Which element sets the AI's behavior?", options: ["Context", "Persona / Role", "Task", "Output Format"], correct: 1 },
                         { id: 2, text: "Why include 'Output Format' in a prompt?", options: ["To confuse the AI", "To ensure the response structure matches your needs (e.g., Table, List)", "To save tokens", "To make it look cool"], correct: 1 },
@@ -93,7 +114,13 @@ const courseData: CourseData = {
                     title: "2.2 Essential Patterns",
                     type: "video",
                     duration: "20m",
-                    videoUrl: "https://www.youtube.com/embed/b-Qe_Tdw4oY", // Advanced Patterns
+                    videoUrl: "https://www.youtube.com/embed/b-Qe_Tdw4oY",
+                    description: "Design patterns aren't just for software code. We explore the 'Persona', 'Recipe', and 'Chain of Thought' patterns—proven strategies to unlock higher reasoning capabilities in models like GPT-4 and Claude.",
+                    useCases: [
+                        "Simulating expert consultants (e.g., Legal, Medical)",
+                        "Generating complex, step-by-step tutorials",
+                        "Solving math or logic puzzles with high accuracy"
+                    ],
                     quiz: [
                         { id: 1, text: "The 'Persona Pattern' uses which key instruction?", options: ["Act as...", "Write a...", "Translate to...", "Summarize..."], correct: 0 },
                         { id: 2, text: "The 'Recipe Pattern' is best for?", options: ["Food", "Generative step-by-step procedures", "Writing poems", "Coding"], correct: 1 },
@@ -109,6 +136,7 @@ const courseData: CourseData = {
 
 export default function ModulePlayer({ params }: { params: Promise<{ moduleId: string }> }) {
     const router = useRouter();
+    const { data: session, status } = useSession();
     const resolvedParams = React.use(params);
     const activeModuleId = resolvedParams.moduleId || "1.1";
 
@@ -122,11 +150,18 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [score, setScore] = useState(0);
     const [quizFinished, setQuizFinished] = useState(false);
-    const [showCertificate, setShowCertificate] = useState(false);
     const [passed, setPassed] = useState(false);
+
+    // Authentication Derived State
+    const isAuthenticated = status === "authenticated";
+    const isLoading = status === "loading";
 
     // Handlers
     const startQuiz = () => {
+        if (!isAuthenticated) {
+            alert("Please login to take the assessment.");
+            return;
+        }
         setShowQuiz(true);
         setCurrentQuestionIndex(0);
         setScore(0);
@@ -160,14 +195,19 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
     };
 
     const handleContinue = () => {
+        if (!isAuthenticated) return;
         if (!isPassed) {
             alert("You need 80% to proceed!");
             return;
         }
-        // Redirect to certificate page
-        const uniqueId = Math.random().toString(36).substr(2, 9).toUpperCase();
+        // Redirect to certificate page with Specific Module Title
+        const uniqueId = "AP-" + Math.random().toString(36).substr(2, 9).toUpperCase();
         router.push(`/certificate?course=${encodeURIComponent(activeModule.title)}&id=${uniqueId}`);
     };
+
+    if (isLoading) {
+        return <div className="min-h-screen bg-[#0a0e27] text-white flex items-center justify-center">Loading Course Environment...</div>;
+    }
 
     return (
         <div className="flex h-screen bg-[#0a0e27] text-white overflow-hidden font-sans">
@@ -210,25 +250,35 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                 <header className="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-[#0a0e27]/95 backdrop-blur z-20">
                     <h1 className="text-xl font-bold truncate">{activeModule.title}</h1>
                     <div className="flex items-center gap-4">
-                        {activeModule.quiz && !passed && !showQuiz && !isPassed && (
+                        {/* Guest Call Action */}
+                        {!isAuthenticated && (
+                            <button onClick={() => signIn()} className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg text-sm font-bold shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition-all">
+                                Login to Track Progress
+                            </button>
+                        )}
+
+                        {/* Authenticated Actions */}
+                        {isAuthenticated && activeModule.quiz && !passed && !showQuiz && !isPassed && (
                             <button onClick={startQuiz} className="px-4 py-2 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20 text-sm font-medium hover:bg-orange-500/20 transition-colors">
                                 Take Quiz
                             </button>
                         )}
-                        {isPassed && (
+                        {isAuthenticated && isPassed && (
                             <div className="flex items-center gap-2 text-green-400 text-sm font-bold bg-green-500/10 px-3 py-1.5 rounded-lg border border-green-500/20">
                                 <span>✓ Passed ({percentage}%)</span>
                             </div>
                         )}
-                        <button
-                            onClick={() => isPassed ? handleContinue() : alert("Please pass the quiz with 80% to complete.")}
-                            className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-lg ${isPassed
-                                    ? 'bg-cyan-600 hover:bg-cyan-500 shadow-cyan-500/20'
-                                    : 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                                }`}
-                        >
-                            Get Certificate
-                        </button>
+                        {isAuthenticated && (
+                            <button
+                                onClick={() => isPassed ? handleContinue() : alert("Please pass the quiz with 80% to complete.")}
+                                className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-lg ${isPassed
+                                        ? 'bg-cyan-600 hover:bg-cyan-500 shadow-cyan-500/20'
+                                        : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                                    }`}
+                            >
+                                Get Certificate
+                            </button>
+                        )}
                     </div>
                 </header>
 
@@ -236,21 +286,36 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                 <div className="flex-1 overflow-y-auto p-8">
                     <div className="max-w-4xl mx-auto">
 
-                        {/* Video Player */}
+                        {/* Video Player Section */}
                         {!showQuiz && !quizFinished && (
                             <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-2xl border border-white/10 mb-8 relative group">
-                                {activeModule.videoUrl ? (
-                                    <iframe
-                                        src={activeModule.videoUrl}
-                                        className="w-full h-full"
-                                        title={activeModule.title}
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen
-                                    />
-                                ) : (
-                                    <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
-                                        <p>Video loading...</p>
+                                {/* Access Control Overlay */}
+                                {!isAuthenticated ? (
+                                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center p-6 text-center">
+                                        <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4 text-2xl">🔒</div>
+                                        <h3 className="text-xl font-bold text-white mb-2">Member Content Locked</h3>
+                                        <p className="text-gray-400 mb-6 max-w-sm">
+                                            Join Apollo Technologies US to watch this lesson, take the quiz, and earn your verified certificate.
+                                        </p>
+                                        <button onClick={() => signIn()} className="px-8 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-full transition-all transform hover:scale-105">
+                                            Unlock Full Access
+                                        </button>
                                     </div>
+                                ) : (
+                                    /* Authenticated Video Player */
+                                    activeModule.videoUrl ? (
+                                        <iframe
+                                            src={activeModule.videoUrl}
+                                            className="w-full h-full"
+                                            title={activeModule.title}
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        />
+                                    ) : (
+                                        <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+                                            <p>Video loading...</p>
+                                        </div>
+                                    )
                                 )}
                             </div>
                         )}
@@ -311,13 +376,29 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                             </div>
                         )}
 
-                        {/* Lesson Text */}
+                        {/* Lesson Text - Visible to All, Enhanced with Data */}
                         {!showQuiz && !quizFinished && (
-                            <div className="prose prose-invert max-w-none">
+                            <div className="prose prose-invert max-w-none mt-12 mb-16">
                                 <h2 className="text-2xl font-bold text-white mb-4">Lesson Overview</h2>
-                                <p className="text-gray-400 leading-relaxed mb-6">
-                                    In this module, we explore the core concepts required for effective interaction with Large Language Models.
+                                <p className="text-gray-300 leading-relaxed text-lg mb-8">
+                                    {activeModule.description || "In this module, we explore the core concepts required for effective interaction with Large Language Models."}
                                 </p>
+
+                                {activeModule.useCases && (
+                                    <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                                        <h3 className="text-lg font-bold text-cyan-400 mb-4 flex items-center gap-2">
+                                            🚀 Professional Use Cases
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            {activeModule.useCases.map((useCase, idx) => (
+                                                <li key={idx} className="flex items-start gap-3">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-2.5"></div>
+                                                    <span className="text-gray-300">{useCase}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
