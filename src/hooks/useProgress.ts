@@ -25,21 +25,52 @@ export function useProgress() {
     });
     const [isLoading, setIsLoading] = useState(true);
 
-    // Load from LocalStorage on mount
+    // Load from LocalStorage OR Database on mount
     useEffect(() => {
-        const stored = localStorage.getItem('apollo_course_progress');
-        if (stored) {
-            try {
-                const parsed = JSON.parse(stored);
-                // Ensure sandboxHistory exists for backward compatibility
-                if (!parsed.sandboxHistory) parsed.sandboxHistory = [];
-                setProgress(parsed);
-            } catch (e) {
-                console.error("Failed to parse progress", e);
+        const loadProgress = async () => {
+            // 1. Try LocalStorage first for instant load
+            const stored = localStorage.getItem('apollo_course_progress');
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (!parsed.sandboxHistory) parsed.sandboxHistory = [];
+                    setProgress(parsed);
+                } catch (e) { console.error(e); }
             }
-        }
-        setIsLoading(false);
+
+            // 2. If valid session, fetch from DB and merge
+            try {
+                const res = await fetch('/api/progress');
+                if (res.ok) {
+                    const dbData = await res.json();
+                    if (!dbData.empty) {
+                        // Simple merge strategy: DB wins if it exists (assuming it's source of truth across devices)
+                        // In a real app, you might want smarter merging logic.
+                        setProgress(dbData);
+                        localStorage.setItem('apollo_course_progress', JSON.stringify(dbData));
+                    }
+                }
+            } catch (e) {
+                // Quiet fail on network error
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadProgress();
     }, []);
+
+    const syncToDb = async (newProgress: CourseProgress) => {
+        try {
+            await fetch('/api/progress', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newProgress)
+            });
+        } catch (e) {
+            console.error("Background sync failed", e);
+        }
+    };
 
     // Save module progress
     const saveProgress = (moduleId: string, score: number) => {
@@ -58,6 +89,7 @@ export function useProgress() {
 
         setProgress(newProgress);
         localStorage.setItem('apollo_course_progress', JSON.stringify(newProgress));
+        syncToDb(newProgress); // Fire and forget sync
     };
 
     // Save Sandbox Result
@@ -75,6 +107,7 @@ export function useProgress() {
 
         setProgress(newProgress);
         localStorage.setItem('apollo_course_progress', JSON.stringify(newProgress));
+        syncToDb(newProgress);
     };
 
     const isModuleCompleted = (moduleId: string) => progress.completedModules.includes(moduleId);
