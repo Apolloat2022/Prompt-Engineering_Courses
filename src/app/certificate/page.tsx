@@ -54,9 +54,9 @@ function CertificateContent() {
                 <div className="absolute bottom-0 left-0 w-0 h-0 border-b-[130px] border-l-[130px] border-b-transparent border-l-[#ca8a04] z-20"></div>
 
                 {/* Header */}
-                <div className="pt-16 px-20 flex justify-between items-start relative z-30">
+                <div className="pt-10 px-20 flex justify-between items-start relative z-30">
                     {/* Logo - 4 times bigger, Apollo Technologies US heading removed */}
-                    <div className="w-48 h-48 flex items-center justify-center">
+                    <div className="w-36 h-36 flex items-center justify-center mt-4">
                         <img 
                             src="/logo.png" 
                             alt="Apollo Technologies Logo" 
@@ -64,37 +64,37 @@ function CertificateContent() {
                         />
                     </div>
 
-                    <div className="text-right">
+                    <div className="text-right mt-4">
                         <h2 className="text-2xl font-bold tracking-widest text-[#1e3a8a]">BUILDFOLIO</h2>
                         <p className="text-[10px] uppercase tracking-[0.2em] text-[#ca8a04]">Official Certification</p>
                     </div>
                 </div>
 
                 {/* Main Content */}
-                <div className="flex-1 flex flex-col items-center justify-center text-center px-16 relative z-30 mt-[-20px]">
+                <div className="flex-1 flex flex-col items-center justify-center text-center px-16 relative z-30 mt-[-10px]">
                     <div className="mb-2">
                         <span className="text-[#ca8a04] text-xs font-bold tracking-[0.4em] uppercase">Certificate of Completion</span>
                     </div>
 
-                    <h1 className="text-[#1e3a8a] text-6xl font-serif font-bold tracking-widest mb-4">CERTIFICATE</h1>
+                    <h1 className="text-[#1e3a8a] text-5xl font-serif font-bold tracking-widest mb-3">CERTIFICATE</h1>
 
-                    <div className="w-24 h-1 bg-[#ca8a04] mb-8"></div>
+                    <div className="w-20 h-1 bg-[#ca8a04] mb-6"></div>
 
-                    <p className="text-gray-500 text-sm italic font-serif mb-6">This is to certify that</p>
+                    <p className="text-gray-500 text-sm italic font-serif mb-4">This is to certify that</p>
 
-                    <div className={`${pinyon.className} text-7xl text-[#1e3a8a] mb-6 min-h-[1.2em]`}>
+                    <div className={`${pinyon.className} text-6xl text-[#1e3a8a] mb-5 min-h-[1.2em]`}>
                         {studentName}
                     </div>
 
-                    <p className="text-gray-500 text-sm max-w-2xl leading-relaxed mb-6">
+                    <p className="text-gray-500 text-sm max-w-2xl leading-relaxed mb-5">
                         Has successfully completed the comprehensive training and assessment for
                     </p>
 
-                    <h2 className="text-2xl font-bold text-black border-b-2 border-gray-200 pb-2 mb-8 px-8 min-w-[400px]">
+                    <h2 className="text-xl font-bold text-black border-b-2 border-gray-200 pb-2 mb-6 px-8 min-w-[400px]">
                         {courseName}
                     </h2>
 
-                    <div className="max-w-3xl text-sm text-gray-600 mb-10 leading-relaxed">
+                    <div className="max-w-3xl text-sm text-gray-600 mb-6 leading-relaxed">
                         Demonstrating high proficiency in <span className="font-semibold text-[#1e3a8a]">Generative AI Communication</span>,
                         <span className="font-semibold text-[#1e3a8a]"> Prompt Design Strategy</span>, and
                         <span className="font-semibold text-[#1e3a8a]"> Applied LLM Problem Solving</span>.
@@ -102,7 +102,7 @@ function CertificateContent() {
                     </div>
 
                     {/* Skill Badges */}
-                    <div className="flex gap-3 flex-wrap justify-center">
+                    <div className="flex gap-3 flex-wrap justify-center mb-8">
                         {['Prompt Engineering', 'Zero-Shot Reasoning', 'Chain-of-Thought', 'System Design'].map(skill => (
                             <span key={skill} className="px-4 py-1.5 bg-gray-50 border border-gray-200 text-gray-600 text-[10px] font-bold uppercase tracking-wider rounded-sm shadow-sm">
                                 {skill}
@@ -112,7 +112,7 @@ function CertificateContent() {
                 </div>
 
                 {/* Footer */}
-                <div className="px-24 pb-20 flex justify-between items-end relative z-30 w-full">
+                <div className="px-24 pb-12 flex justify-between items-end relative z-30 w-full">
                     {/* Date */}
                     <div className="text-center w-56">
                         <div className="border-b border-gray-400 mb-2 pb-1">
@@ -122,12 +122,12 @@ function CertificateContent() {
                     </div>
 
                     {/* Seal */}
-                    <div className="absolute left-1/2 bottom-16 -translate-x-1/2 opacity-90">
-                        <div className="w-24 h-24 rounded-full border-4 border-[#ca8a04] flex items-center justify-center p-1">
+                    <div className="absolute left-1/2 bottom-8 -translate-x-1/2 opacity-90">
+                        <div className="w-20 h-20 rounded-full border-4 border-[#ca8a04] flex items-center justify-center p-1">
                             <div className="w-full h-full border border-[#ca8a04] rounded-full flex items-center justify-center bg-[#fff8e1]">
                                 <div className="text-center">
-                                    <div className="text-[#ca8a04] text-[8px] tracking-widest font-bold">OFFICIAL</div>
-                                    <div className="text-[#1e3a8a] text-xl font-bold font-serif">SEAL</div>
+                                    <div className="text-[#ca8a04] text-[7px] tracking-widest font-bold">OFFICIAL</div>
+                                    <div className="text-[#1e3a8a] text-lg font-bold font-serif">SEAL</div>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@ function CertificateContent() {
                     {/* Signature */}
                     <div className="text-center w-56">
                         <div className="border-b border-gray-400 mb-2 relative h-12 flex items-end justify-center">
-                            <div className={`${dancingScript.className} text-3xl text-[#1e3a8a] absolute bottom-2 -rotate-6`}>
+                            <div className={`${dancingScript.className} text-2xl text-[#1e3a8a] absolute bottom-2 -rotate-6`}>
                                 Robin Pandey
                             </div>
                         </div>
@@ -146,7 +146,7 @@ function CertificateContent() {
                 </div>
 
                 {/* Bottom Verification */}
-                <div className="absolute bottom-5 left-0 right-0 text-center text-[9px] text-gray-400 z-30 font-mono">
+                <div className="absolute bottom-3 left-0 right-0 text-center text-[8px] text-gray-400 z-30 font-mono">
                     ID: {certificateId} &bull; AUTHENTICITY VERIFIED BY APOLLO TECHNOLOGIES &bull; BUILDFOLIO STANDARD
                 </div>
             </div>
