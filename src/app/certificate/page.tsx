@@ -55,9 +55,15 @@ function CertificateContent() {
 
                 {/* Header */}
                 <div className="pt-16 px-20 flex justify-between items-start relative z-30">
-                    {/* Logo Placeholder */}
+                    {/* Logo - Updated with logo.png */}
                     <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-[#1e3a8a] flex items-center justify-center text-white font-bold text-xl rounded">A</div>
+                        <div className="w-12 h-12 flex items-center justify-center">
+                            <img 
+                                src="/logo.png" 
+                                alt="Apollo Technologies Logo" 
+                                className="w-full h-full object-contain"
+                            />
+                        </div>
                         <div>
                             <h3 className="font-bold text-[#1e3a8a] text-lg tracking-wide">APOLLO</h3>
                             <p className="text-[10px] tracking-widest text-gray-500 uppercase">Technologies US</p>
