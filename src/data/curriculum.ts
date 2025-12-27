@@ -232,7 +232,7 @@ export const level2Curriculum: CourseData = {
                     title: "The Autonomous Loop",
                     type: "video",
                     duration: "40m",
-                    videoUrl: "https://www.youtube.com/embed/Sal7O_osGxQ",
+                    videoUrl: "https://www.youtube.com/embed/KoJAC3hVr5g",
                     description: "Moving from Chatbots to Agents. We explore the fundamental 'Thought-Action-Observation' loop that allows AI to behave autonomously. Understand the difference between zero-shot answering and iterative problem solving.",
                     useCases: [
                         "Designing a research agent that browses the web",
@@ -278,7 +278,7 @@ export const level2Curriculum: CourseData = {
                     title: "Function Calling Fundamentals",
                     type: "video",
                     duration: "35m",
-                    videoUrl: "https://www.youtube.com/embed/AiyKMcg5sK8",
+                    videoUrl: "https://www.youtube.com/embed/7E-qdsVEoB8",
                     description: "Agents need hands. Function calling (or Tool Use) allows LLMs to interact with the outside world—sending emails, querying databases, or running calculations. We learn how to define tool schemas and handle model outputs.",
                     useCases: [
                         "Connecting an LLM to a SQL database",
@@ -298,7 +298,7 @@ export const level2Curriculum: CourseData = {
                     title: "Building Custom Tools",
                     type: "video",
                     duration: "40m",
-                    videoUrl: "https://www.youtube.com/embed/N-U_fU1_VNs",
+                    videoUrl: "https://www.youtube.com/embed/NiLb5DK4_rU",
                     description: "Theory is great, but practice is better. We build a custom tool from scratch—a 'Stock Price Fetcher' and a 'Sentiment Analyzer'—and wire them into a LangChain agent.",
                     useCases: [
                         "Real-time financial dashboard generation",
