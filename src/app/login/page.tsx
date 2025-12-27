@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import LoginButton from './LoginButton';
 
 export default function Login() {
@@ -10,7 +11,9 @@ export default function Login() {
             <p className="text-gray-400">Sign in to access your courses</p>
           </div>
 
-          <LoginButton />
+          <Suspense fallback={<div className="h-12 w-full bg-white/5 rounded-lg animate-pulse" />}>
+            <LoginButton />
+          </Suspense>
 
           <p className="text-xs text-gray-500 text-center mt-6">
             Secure OAuth authentication
