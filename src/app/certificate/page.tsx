@@ -53,28 +53,24 @@ function CertificateContent() {
                 <div className="absolute bottom-0 left-0 w-0 h-0 border-b-[180px] border-l-[180px] border-b-transparent border-l-[#1e3a8a] z-10"></div>
                 <div className="absolute bottom-0 left-0 w-0 h-0 border-b-[130px] border-l-[130px] border-b-transparent border-l-[#ca8a04] z-20"></div>
 
-               {/* Header */}
-<div className="pt-16 px-20 flex justify-between items-start relative z-30">
-    {/* Logo - 3 times bigger (image only) */}
-    <div className="flex items-center gap-3">
-        <div className="w-36 h-36 flex items-center justify-center">
-            <img 
-                src="/logo.png" 
-                alt="Apollo Technologies Logo" 
-                className="w-full h-full object-contain"
-            />
-        </div>
-        <div>
-            <h3 className="font-bold text-[#1e3a8a] text-lg tracking-wide">APOLLO</h3>
-            <p className="text-[10px] tracking-widest text-gray-500 uppercase">Technologies US</p>
-        </div>
-    </div>
+                {/* Header */}
+                <div className="pt-12 px-20 flex justify-between items-start relative z-30">
+                    {/* Logo - 1.5 times bigger, Apollo Technologies US heading removed */}
+                    <div className="flex items-center">
+                        <div className="w-18 h-18 flex items-center justify-center">
+                            <img 
+                                src="/logo.png" 
+                                alt="Apollo Technologies Logo" 
+                                className="w-full h-full object-contain"
+                            />
+                        </div>
+                    </div>
 
-    <div className="text-right">
-        <h2 className="text-2xl font-bold tracking-widest text-[#1e3a8a]">BUILDFOLIO</h2>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-[#ca8a04]">Official Certification</p>
-    </div>
-</div>
+                    <div className="text-right">
+                        <h2 className="text-2xl font-bold tracking-widest text-[#1e3a8a]">BUILDFOLIO</h2>
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-[#ca8a04]">Official Certification</p>
+                    </div>
+                </div>
 
                 {/* Main Content */}
                 <div className="flex-1 flex flex-col items-center justify-center text-center px-16 relative z-30 mt-[-20px]">
@@ -118,7 +114,7 @@ function CertificateContent() {
                 </div>
 
                 {/* Footer */}
-                <div className="px-24 pb-20 flex justify-between items-end relative z-30 w-full">
+                <div className="px-24 pb-16 flex justify-between items-end relative z-30 w-full">
                     {/* Date */}
                     <div className="text-center w-56">
                         <div className="border-b border-gray-400 mb-2 pb-1">
@@ -128,7 +124,7 @@ function CertificateContent() {
                     </div>
 
                     {/* Seal */}
-                    <div className="absolute left-1/2 bottom-16 -translate-x-1/2 opacity-90">
+                    <div className="absolute left-1/2 bottom-12 -translate-x-1/2 opacity-90">
                         <div className="w-24 h-24 rounded-full border-4 border-[#ca8a04] flex items-center justify-center p-1">
                             <div className="w-full h-full border border-[#ca8a04] rounded-full flex items-center justify-center bg-[#fff8e1]">
                                 <div className="text-center">
