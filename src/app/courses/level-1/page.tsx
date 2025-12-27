@@ -2,12 +2,13 @@
 
 import React from 'react';
 
-const weeks = [
-  { id: 1, title: "Week 1: The AI Mindset", modules: ["1.1 LLM Perspective", "1.2 First Contact"] },
-  { id: 2, title: "Week 2: Core Principles", modules: ["2.1 Anatomy of a Prompt", "2.2 Essential Patterns"] },
-  { id: 3, title: "Week 3: IT Management", modules: ["3.1 Tech Documentation", "3.2 Problem-Solving"] },
-  { id: 4, title: "Week 4: Implementation", modules: ["4.1 Critical Evaluation", "4.2 Starter Toolkit"] }
-];
+import { level1Curriculum } from '../../../data/curriculum';
+
+const weeks = level1Curriculum.weeks.map(week => ({
+  id: week.id,
+  title: week.title,
+  modules: week.modules.map(m => m.title)
+}));
 
 export default function LevelOne() {
   return (

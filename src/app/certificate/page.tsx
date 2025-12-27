@@ -40,7 +40,7 @@ function CertificateContent() {
 
             {/* Certificate Paper */}
             <div className="relative w-full max-w-[1000px] aspect-[1.414/1] bg-white !text-black shadow-2xl flex flex-col print:shadow-none print:w-full border-[12px] border-white outline outline-1 outline-gray-200">
-                
+
                 {/* Top Right Corner */}
                 <div className="absolute top-0 right-0 w-0 h-0 border-t-[140px] border-r-[140px] border-t-transparent border-r-[#1e3a8a] z-10"></div>
                 <div className="absolute top-0 right-0 w-0 h-0 border-t-[100px] border-r-[100px] border-t-transparent border-r-[#ca8a04] z-20"></div>
@@ -72,10 +72,19 @@ function CertificateContent() {
                         {studentName}
                     </div>
 
-                    <div className="max-w-2xl text-sm leading-relaxed !text-gray-600">
-                        We give this certificate because <span className="font-bold !text-red-700">{studentName}</span> has completed the 
-                        <span className="font-bold"> "{courseName}" </span> project and passed all assessments, 
+                    <div className="max-w-2xl text-sm leading-relaxed !text-gray-600 mb-8">
+                        We give this certificate because <span className="font-bold !text-red-700">{studentName}</span> has completed the
+                        <span className="font-bold"> "{courseName}" </span> project and passed all assessments,
                         demonstrating proficiency in prompt engineering, LLM strategy, and software engineering best practices.
+                    </div>
+
+                    {/* Verified Skills Badges */}
+                    <div className="flex gap-4 flex-wrap justify-center mb-10">
+                        {['Prompt Engineering', 'Large Language Models', 'Chain-of-Thought', 'AI Ethics'].map(skill => (
+                            <span key={skill} className="px-3 py-1 bg-blue-50 border border-blue-100 rounded-full text-[10px] uppercase tracking-wider text-blue-800 font-semibold shadow-sm">
+                                {skill}
+                            </span>
+                        ))}
                     </div>
                 </div>
 

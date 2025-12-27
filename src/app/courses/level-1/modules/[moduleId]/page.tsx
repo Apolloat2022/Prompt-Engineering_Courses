@@ -5,134 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession, signIn } from 'next-auth/react';
 
-// Types
-interface Question {
-    id: number;
-    text: string;
-    options: string[];
-    correct: number;
-}
-
-interface Module {
-    id: string;
-    title: string;
-    type: string;
-    duration: string;
-    videoUrl?: string; // Unique URL
-    description?: string; // NEW: Rich description
-    useCases?: string[]; // NEW: Practical applications
-    quiz?: Question[];
-}
-
-interface Week {
-    id: number;
-    title: string;
-    modules: Module[];
-}
-
-interface CourseData {
-    title: string;
-    weeks: Week[];
-}
-
-// Mock Data - Expanded with Descriptions & Use Cases
-const courseData: CourseData = {
-    title: "AI Communication Fundamentals",
-    weeks: [
-        {
-            id: 1,
-            title: "Week 1: The AI Mindset",
-            modules: [
-                {
-                    id: "1.1",
-                    title: "1.1 LLM Perspective",
-                    type: "video",
-                    duration: "10m",
-                    videoUrl: "https://www.youtube.com/embed/5sLYAQS9sWQ",
-                    description: "Understanding Large Language Models (LLMs) requires shifting your perspective from 'searching' to 'instructing'. In this module, we dissect how LLMs process information through tokenization and next-word prediction, demystifying the 'black box' of AI.",
-                    useCases: [
-                        "Explaining AI limitations to stakeholders",
-                        "Debugging unexpected model outputs",
-                        "Designing constraints for business applications"
-                    ],
-                    quiz: [
-                        { id: 1, text: "What represents the 'knowledge' in an LLM?", options: ["The internet connection", "The parameters (weights) learned during training", "A SQL database", "The user's input"], correct: 1 },
-                        { id: 2, text: "LLMs are fundamentally prediction engines for what?", options: ["Stock prices", "Next tokens (words)", "Weather", "Truth"], correct: 1 },
-                        { id: 3, text: "Do LLMs 'understand' text like humans?", options: ["Yes, exactly like humans", "No, they process statistical patterns", "Yes, they have consciousness", "Only if paid"], correct: 1 },
-                        { id: 4, text: "What is 'Pre-training'?", options: ["Learning from massive datasets", "Learning from user feedback", "The time before training", "Installing Python"], correct: 0 },
-                        { id: 5, text: "Can LLMs hallucinate?", options: ["No, never", "Yes, they can generate confident falsehoods", "Only on outdated hardware", "Only in zero-shot mode"], correct: 1 }
-                    ]
-                },
-                {
-                    id: "1.2",
-                    title: "1.2 First Contact",
-                    type: "video",
-                    duration: "15m",
-                    videoUrl: "https://www.youtube.com/embed/_ZvnD7N7p2w",
-                    description: "Your first interaction with an LLM sets the tone for future success. This module covers the foundational syntax of effective prompting, the importance of clarity, and how to avoid the 'Garbage In, Garbage Out' trap.",
-                    useCases: [
-                        "Writing your first effective email drafter",
-                        "Summarizing complex meeting notes",
-                        "Translating natural language to code"
-                    ],
-                    quiz: [
-                        { id: 1, text: "What is the primary role of a Prompt Engineer?", options: ["To fix computers", "To craft inputs that guide AI effectively", "To write Python code", "To manage servers"], correct: 1 },
-                        { id: 2, text: "Which approach usually yields better results?", options: ["Vague questions", "Specific, structured instructions", "One word prompts", "Asking politely only"], correct: 1 },
-                        { id: 3, text: "What is 'Iterative Prompting'?", options: ["Asking once and giving up", "Refining the prompt based on output until success", "Repeating the same prompt", "Auto-looping"], correct: 1 },
-                        { id: 4, text: "Why is English often called the 'new programming language'?", options: ["It isn't", "Because we prompt models in natural language", "Because Python is dead", "Because compilers speak English"], correct: 1 },
-                        { id: 5, text: "Is the first output always the best?", options: ["Yes, AI is perfect", "No, refinement is often needed", "Only for GPT-4", "Depends on the weather"], correct: 1 }
-                    ]
-                }
-            ]
-        },
-        {
-            id: 2,
-            title: "Week 2: Core Principles",
-            modules: [
-                {
-                    id: "2.1",
-                    title: "2.1 Anatomy of a Prompt",
-                    type: "video",
-                    duration: "12m",
-                    videoUrl: "https://www.youtube.com/embed/jKrj0j9H19u",
-                    description: "A professional prompt isn't just a sentence; it's a structured object. We break down the four key components: Instruction, Context, Input Data, and Output Indicator. Mastering this anatomy is the difference between a junior and senior prompt engineer.",
-                    useCases: [
-                        "Creating reusable prompt templates for teams",
-                        "Standardizing AI outputs for software integration",
-                        "Reducing token usage while maintaining quality"
-                    ],
-                    quiz: [
-                        { id: 1, text: "Which element sets the AI's behavior?", options: ["Context", "Persona / Role", "Task", "Output Format"], correct: 1 },
-                        { id: 2, text: "Why include 'Output Format' in a prompt?", options: ["To confuse the AI", "To ensure the response structure matches your needs (e.g., Table, List)", "To save tokens", "To make it look cool"], correct: 1 },
-                        { id: 3, text: "What does 'Context' provide?", options: ["The goal", "Background information to constrain the solution space", "The output", "The format"], correct: 1 },
-                        { id: 4, text: "If you want a 50-word summary, which component is that?", options: ["Constraint", "Persona", "Context", "Input Data"], correct: 0 },
-                        { id: 5, text: "Are all components required for every prompt?", options: ["Yes, strict rule", "No, but they help complexity", "No, only specific ones exist", "Only context matters"], correct: 1 }
-                    ]
-                },
-                {
-                    id: "2.2",
-                    title: "2.2 Essential Patterns",
-                    type: "video",
-                    duration: "20m",
-                    videoUrl: "https://www.youtube.com/embed/b-Qe_Tdw4oY",
-                    description: "Design patterns aren't just for software code. We explore the 'Persona', 'Recipe', and 'Chain of Thought' patterns—proven strategies to unlock higher reasoning capabilities in models like GPT-4 and Claude.",
-                    useCases: [
-                        "Simulating expert consultants (e.g., Legal, Medical)",
-                        "Generating complex, step-by-step tutorials",
-                        "Solving math or logic puzzles with high accuracy"
-                    ],
-                    quiz: [
-                        { id: 1, text: "The 'Persona Pattern' uses which key instruction?", options: ["Act as...", "Write a...", "Translate to...", "Summarize..."], correct: 0 },
-                        { id: 2, text: "The 'Recipe Pattern' is best for?", options: ["Food", "Generative step-by-step procedures", "Writing poems", "Coding"], correct: 1 },
-                        { id: 3, text: "What does 'Chain of Thought' encourage?", options: ["Speed", "Reasoning transparency", "Short answers", "Randomness"], correct: 1 },
-                        { id: 4, text: "In the 'Flipped Interaction' pattern, who asks the questions?", options: ["The User", "The AI", "The Developer", "Nobody"], correct: 1 },
-                        { id: 5, text: "Why use patterns?", options: ["To memorize names", "To standardize effective strategies for recurring problems", "They are mandatory", "To avoid typing"], correct: 1 }
-                    ]
-                }
-            ]
-        }
-    ]
-};
+import { level1Curriculum } from '../../../../../data/curriculum';
 
 export default function ModulePlayer({ params }: { params: Promise<{ moduleId: string }> }) {
     const router = useRouter();
@@ -141,9 +14,9 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
     const activeModuleId = resolvedParams.moduleId || "1.1";
 
     // Derived State
-    const activeModule = courseData.weeks
+    const activeModule = level1Curriculum.weeks
         .flatMap(w => w.modules)
-        .find(m => m.id === activeModuleId) || courseData.weeks[0].modules[0];
+        .find(m => m.id === activeModuleId) || level1Curriculum.weeks[0].modules[0];
 
     // Quiz State
     const [showQuiz, setShowQuiz] = useState(false);
@@ -217,10 +90,10 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                     <Link href="/courses/level-1" className="text-sm text-gray-400 hover:text-white flex items-center gap-2 mb-4">
                         ← Back to Overview
                     </Link>
-                    <h2 className="font-bold text-lg text-cyan-400">{courseData.title}</h2>
+                    <h2 className="font-bold text-lg text-cyan-400">{level1Curriculum.title}</h2>
                 </div>
                 <div className="flex-1 overflow-y-auto p-4 space-y-6">
-                    {courseData.weeks.map(week => (
+                    {level1Curriculum.weeks.map(week => (
                         <div key={week.id}>
                             <h3 className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-3 px-2">{week.title}</h3>
                             <div className="space-y-1">
@@ -230,8 +103,8 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                                         href={`/courses/level-1/modules/${module.id}`}
                                         onClick={() => { setShowQuiz(false); setQuizFinished(false); }}
                                         className={`flex items-center justify-between p-3 rounded-lg text-sm transition-all ${activeModuleId === module.id
-                                                ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
-                                                : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+                                            ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
+                                            : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
                                             }`}
                                     >
                                         <span>{module.title}</span>
@@ -272,8 +145,8 @@ export default function ModulePlayer({ params }: { params: Promise<{ moduleId: s
                             <button
                                 onClick={() => isPassed ? handleContinue() : alert("Please pass the quiz with 80% to complete.")}
                                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors shadow-lg ${isPassed
-                                        ? 'bg-cyan-600 hover:bg-cyan-500 shadow-cyan-500/20'
-                                        : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                                    ? 'bg-cyan-600 hover:bg-cyan-500 shadow-cyan-500/20'
+                                    : 'bg-gray-700 text-gray-400 cursor-not-allowed'
                                     }`}
                             >
                                 Get Certificate
