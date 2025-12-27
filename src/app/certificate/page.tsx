@@ -146,8 +146,8 @@ function CertificateContent() {
                     </div>
                 </div>
 
-                {/* Bottom Verification */}
-                <div className="absolute bottom-3 left-0 right-0 text-center text-[9px] text-gray-400 z-30 font-mono">
+                {/* Bottom Verification - Moved up slightly to be inside certificate */}
+                <div className="absolute bottom-1 left-0 right-0 text-center text-[8px] text-gray-400 z-30 font-mono">
                     ID: {certificateId} &bull; AUTHENTICITY VERIFIED BY APOLLO TECHNOLOGIES &bull; BUILDFOLIO STANDARD
                 </div>
             </div>
