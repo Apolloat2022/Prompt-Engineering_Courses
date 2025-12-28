@@ -135,6 +135,54 @@ export default function Dashboard() {
                         </a>
                     </div>
                 </div>
+
+                {/* Student Resources Section */}
+                <div className="mt-16">
+                    <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                        <span className="w-2 h-8 bg-cyan-500 rounded-full"></span>
+                        Student Resources
+                    </h2>
+
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {/* Resource Card 1: Slides */}
+                        <div className="glass-card p-6 flex items-center gap-6 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-all group">
+                            <div className="w-16 h-16 rounded-lg bg-red-500/10 flex items-center justify-center text-3xl border border-red-500/20 group-hover:scale-110 transition-transform">
+                                📑
+                            </div>
+                            <div className="flex-grow">
+                                <h3 className="text-xl font-bold mb-1 group-hover:text-cyan-400 transition-colors">Course Slides</h3>
+                                <p className="text-sm text-gray-400 mb-2">Comprehensive deck covering all modules.</p>
+                                <a
+                                    href="/Prompt-engineering-slide.pdf"
+                                    target="_blank"
+                                    className="text-xs font-bold text-cyan-400 uppercase tracking-wider hover:underline flex items-center gap-1"
+                                >
+                                    Download PDF
+                                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Resource Card 2: Roadmap */}
+                        <div className="glass-card p-6 flex items-center gap-6 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-all group">
+                            <div className="w-16 h-16 rounded-lg bg-blue-500/10 flex items-center justify-center text-3xl border border-blue-500/20 group-hover:scale-110 transition-transform">
+                                🗺️
+                            </div>
+                            <div className="flex-grow">
+                                <h3 className="text-xl font-bold mb-1 group-hover:text-cyan-400 transition-colors">Novice to Pro Roadmap</h3>
+                                <p className="text-sm text-gray-400 mb-2">Visual journey map for your skill progression.</p>
+                                <a
+                                    href="/Novice-to-pro.png"
+                                    target="_blank"
+                                    className="text-xs font-bold text-cyan-400 uppercase tracking-wider hover:underline flex items-center gap-1"
+                                >
+                                    View Image
+                                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
