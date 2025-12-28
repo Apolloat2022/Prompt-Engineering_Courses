@@ -29,6 +29,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <a href="/" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
                     Home
                   </a>
+                  <a href="/blog" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+                    Blog
+                  </a>
+                  <a href="/podcast" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+                    Podcast
+                  </a>
                   <a href="/dashboard" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
                     Dashboard
                   </a>
