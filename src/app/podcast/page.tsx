@@ -36,7 +36,7 @@ export default function PodcastPage() {
                             <div className="aspect-video bg-black rounded-xl relative overflow-hidden group shadow-2xl">
                                 <iframe
                                     className="w-full h-full object-cover"
-                                    src="https://www.youtube.com/embed/OkLjKA8-xyA"
+                                    src="https://www.youtube.com/embed/FemFuZZA26M"
                                     title="YouTube video player"
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -46,9 +46,9 @@ export default function PodcastPage() {
                         </GlassCard>
 
                         <div className="prose prose-invert max-w-none">
-                            <h3 className="text-2xl font-bold mb-4">Episode Notes</h3>
+                            <h3 className="text-2xl font-bold mb-4">Prompt Engineering! Getting Great Answers from AI</h3>
                             <p className="text-gray-400">
-                                In this episode, we explore how large language models are transforming the way we write, debug, and maintain code. Are we moving towards a future where natural language is the primary programming interface?
+                                In this session, we dive deep into the art and science of prompt engineering. Learn the specific strategies and techniques to get the most out of large language models, ensuring you get accurate, relevant, and high-quality responses every time.
                             </p>
                         </div>
                     </div>
