@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
@@ -14,8 +15,13 @@ export default function ProfilePage() {
     });
 
     const { progress, getModuleScore } = useProgress();
+    const [mounted, setMounted] = useState(false);
 
-    if (status === 'loading') {
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (status === 'loading' || !mounted) {
         return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
     }
 
@@ -95,8 +101,62 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
-                    {/* Recent Activity */}
+                    {/* Achievement Badges */}
                     <div className="mt-12">
+                        <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                            <span>🏆</span> Achievement Badges
+                        </h2>
+                        <div className="flex flex-wrap gap-4">
+                            <div className={`p-4 rounded-2xl border transition-all flex flex-col items-center gap-2 w-32 ${completedCount > 0 ? 'bg-cyan-500/10 border-cyan-500/50 grayscale-0' : 'bg-white/5 border-white/10 grayscale opacity-40'}`}>
+                                <span className="text-3xl">🚀</span>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-center">Pioneer</span>
+                            </div>
+                            <div className={`p-4 rounded-2xl border transition-all flex flex-col items-center gap-2 w-32 ${promptsTested >= 5 ? 'bg-pink-500/10 border-pink-500/50 grayscale-0' : 'bg-white/5 border-white/10 grayscale opacity-40'}`}>
+                                <span className="text-3xl">🧪</span>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-center">Researcher</span>
+                            </div>
+                            <div className={`p-4 rounded-2xl border transition-all flex flex-col items-center gap-2 w-32 ${completedCount >= 5 ? 'bg-purple-500/10 border-purple-500/50 grayscale-0' : 'bg-white/5 border-white/10 grayscale opacity-40'}`}>
+                                <span className="text-3xl">🧠</span>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-center">Strategist</span>
+                            </div>
+                            <div className={`p-4 rounded-2xl border transition-all flex flex-col items-center gap-2 w-32 ${avgScore >= 95 ? 'bg-yellow-500/10 border-yellow-500/50 grayscale-0' : 'bg-white/5 border-white/10 grayscale opacity-40'}`}>
+                                <span className="text-3xl">✨</span>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-center">Perfectionist</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Certificate Gallery */}
+                    <div className="mt-12">
+                        <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                            <span>📜</span> Certificate Gallery
+                        </h2>
+                        {avgScore >= 80 && completedCount > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <Link
+                                    href={`/certificate?course=Level 1 Fundamentals&id=AP-${userInitials}-L1`}
+                                    className="p-6 rounded-xl bg-gradient-to-br from-[#1c245d] to-[#131b4d] border border-cyan-500/30 hover:border-cyan-500 transition-all group"
+                                >
+                                    <div className="flex items-center justify-between mb-4">
+                                        <span className="text-cyan-400 font-bold text-sm tracking-tighter">CERTIFIED</span>
+                                        <span className="text-2xl">🎓</span>
+                                    </div>
+                                    <h3 className="font-bold text-white group-hover:text-cyan-400 transition-colors">AI Communication Fundamentals</h3>
+                                    <p className="text-xs text-gray-500 mt-2">Earned: {new Date().toLocaleDateString()}</p>
+                                </Link>
+                            </div>
+                        ) : (
+                            <div className="p-8 border border-dashed border-white/10 rounded-xl text-center">
+                                <p className="text-gray-500 italic text-sm">Pass a module with 80% to unlock your first certificate.</p>
+                                <Link href="/courses/level-1" className="text-cyan-400 text-xs font-bold uppercase tracking-widest mt-4 inline-block hover:underline">Start Learning →</Link>
+                            </div>
+                        )}
+                    </div>
+
+                    <hr className="my-10 border-white/10" />
+
+                    {/* Recent Activity */}
+                    <div className="">
                         <h2 className="text-xl font-bold mb-6">Recent Activity</h2>
                         {progress.completedModules.length > 0 ? (
                             <div className="space-y-4">
@@ -113,7 +173,7 @@ export default function ProfilePage() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-gray-500 italic">No activity yet. Start a course!</p>
+                            <p className="text-gray-500 italic text-sm">No activity yet. Your journey begins here!</p>
                         )}
                     </div>
                 </div>

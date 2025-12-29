@@ -16,23 +16,71 @@ interface Episode {
 export default function PodcastPage() {
     const episodes: Episode[] = [
         {
+            id: "sPzc6hMg7So",
+            number: "EXPERT 06",
+            title: "Multi-Agent Orchestration: CrewAI & AutoGen",
+            guest: "Apollo Experts",
+            duration: "50:00",
+            description: "One agent is powerful; a team is unstoppable. We dive into Multi-Agent frameworks like CrewAI and AutoGen. Learn to assign roles and have them collaborate to solve complex, multi-step tasks."
+        },
+        {
+            id: "TRjq7t2Ms5I",
+            number: "EXPERT 05",
+            title: "Advanced RAG: Beyond Naive Retrieval",
+            guest: "Apollo Experts",
+            duration: "45:00",
+            description: "Explore advanced retrieval techniques: Hybrid Search, Parent-Child Indexing, and Re-ranking to drastically improve retrieval quality for production AI systems."
+        },
+        {
+            id: "NiLb5DK4_rU",
+            number: "EXPERT 04",
+            title: "Hands-on: Building Custom AI Tools",
+            guest: "Apollo Experts",
+            duration: "40:00",
+            description: "Learn how to build and wire custom tools—like stock fetchers and sentiment analyzers—into LangChain agents for real-world functionality."
+        },
+        {
+            id: "7E-qdsVEoB8",
+            number: "EXPERT 03",
+            title: "Function Calling Fundamentals",
+            guest: "Apollo Experts",
+            duration: "35:00",
+            description: "Understanding how to give LLMs 'hands'. We master tool schemas and handle model outputs to connect AI to databases and APIs."
+        },
+        {
+            id: "T-D1OfcDW1M",
+            number: "EXPERT 02",
+            title: "RAG & Vector Databases",
+            guest: "Apollo Experts",
+            duration: "45:00",
+            description: "The bridge between frozen model weights and private data. We explore vector embeddings and retrieval strategies to ground AI outputs."
+        },
+        {
+            id: "KoJAC3hVr5g",
+            number: "EXPERT 01",
+            title: "The Autonomous Agent Loop",
+            guest: "Apollo Experts",
+            duration: "40:00",
+            description: "Moving from chatbots to agents. We dissect the 'Thought-Action-Observation' loop that enables autonomous problem solving."
+        },
+        {
             id: "FemFuZZA26M",
             number: "EP. 04",
             title: "Prompt Engineering! Getting Great Answers from AI",
             guest: "Apollo Team",
             duration: "15:20",
-            description: "In this session, we dive deep into the art and science of prompt engineering. Learn the specific strategies and techniques to get the most out of large language models, ensuring you get accurate, relevant, and high-quality responses every time."
+            description: "In this session, we dive deep into the art and science of prompt engineering. Learn the specific strategies and techniques to get the most out of large language models."
         },
         {
             id: "OkLjKA8-xyA",
             number: "EP. 03",
-            title: "Prompt Engineering Mastery: The Ultimate Guide to AI",
+            title: "Prompt Engineering Mastery: The Ultimate Guide",
             guest: "Apollo Team",
             duration: "45:00",
-            description: "Step into the world of professional prompt engineering. This comprehensive guide covers everything from basic instruction to advanced structural patterns. Learn how to master the perfect prompt template used by elite AI agencies."
+            description: "Step into the world of professional prompt engineering. This comprehensive guide covers everything from basic instruction to advanced structural patterns."
         },
         {
-            id: "yFMVT3bcrJo", // A Liam Ottley ID from curriculum
+            id: "yFMVT3bcrJo",
             number: "EP. 02",
             title: "The Architecture of LLMs",
             guest: "Liam Ottley",
@@ -40,7 +88,7 @@ export default function PodcastPage() {
             description: "Understanding the underlying architecture of models like GPT-4 is crucial for designing effective prompts. We explore transformer modules and neural attention."
         },
         {
-            id: "5sLYAQS9sWQ", // Another Liam Ottley ID from curriculum
+            id: "5sLYAQS9sWQ",
             number: "EP. 01",
             title: "Future of Autonomous Agents",
             guest: "Dr. Elena Vance",
@@ -102,8 +150,8 @@ export default function PodcastPage() {
                                 <GlassCard
                                     key={ep.id}
                                     className={`cursor-pointer group transition-all duration-300 ${selectedEpisode.id === ep.id
-                                            ? "border-cyan-500/50 bg-cyan-500/5"
-                                            : "hover:bg-white/5 border-white/5"
+                                        ? "border-cyan-500/50 bg-cyan-500/5"
+                                        : "hover:bg-white/5 border-white/5"
                                         }`}
                                     onClick={() => setSelectedEpisode(ep)}
                                 >

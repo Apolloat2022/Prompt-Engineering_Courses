@@ -1,31 +1,9 @@
 import { GlassCard } from "../components/landing/GlassCard";
 import { InteractiveBackground } from "../components/landing/InteractiveBackground";
+import { blogPosts } from "../../data/blog";
+import Link from "next/link";
 
 export default function BlogPage() {
-    const posts = [
-        {
-            title: "The Rise of Agentic AI",
-            excerpt: "How autonomous agents are reshaping the software development lifecycle.",
-            date: "Dec 28, 2024",
-            author: "Apollo Team",
-            category: "Trends"
-        },
-        {
-            title: "Mastering Few-Shot Prompting",
-            excerpt: "A deep dive into providing examples to guide LLM outputs effectively.",
-            date: "Dec 25, 2024",
-            author: "Sarah Jenks",
-            category: "Tutorial"
-        },
-        {
-            title: "Why Context Window Matters",
-            excerpt: "Understanding token limits and how to optimize your prompts for long-context models.",
-            date: "Dec 20, 2024",
-            author: "Mike Chen",
-            category: "Technical"
-        }
-    ];
-
     return (
         <div className="min-h-screen relative overflow-hidden">
             <InteractiveBackground />
@@ -76,11 +54,11 @@ export default function BlogPage() {
                         </div>
                     </GlassCard>
 
-                    {posts.map((post, i) => (
-                        <GlassCard key={i} delay={i * 0.1} className="h-full">
+                    {blogPosts.map((post, i) => (
+                        <GlassCard key={post.slug} delay={i * 0.1} className="h-full">
                             <div className="p-8 h-full flex flex-col items-start">
                                 <div className="mb-6 w-full h-48 rounded-lg bg-gradient-to-br from-cyan-900/30 to-blue-900/30 border border-white/5 flex items-center justify-center text-5xl">
-                                    {i === 0 ? '🤖' : i === 1 ? '🎓' : '📏'}
+                                    {post.icon}
                                 </div>
 
                                 <div className="flex items-center gap-4 text-xs text-gray-500 mb-4 uppercase tracking-wider font-semibold w-full">
@@ -97,10 +75,13 @@ export default function BlogPage() {
                                     {post.excerpt}
                                 </p>
 
-                                <button className="mt-auto text-sm font-bold text-white flex items-center gap-2 group hover:text-cyan-400 transition-colors">
+                                <Link
+                                    href={`/blog/${post.slug}`}
+                                    className="mt-auto text-sm font-bold text-white flex items-center gap-2 group hover:text-cyan-400 transition-colors"
+                                >
                                     Read Article
                                     <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
-                                </button>
+                                </Link>
                             </div>
                         </GlassCard>
                     ))}
@@ -109,3 +90,4 @@ export default function BlogPage() {
         </div>
     );
 }
+

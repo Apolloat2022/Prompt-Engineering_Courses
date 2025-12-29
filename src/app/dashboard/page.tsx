@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
@@ -15,8 +16,13 @@ export default function Dashboard() {
     });
 
     const { progress, isModuleCompleted } = useProgress();
+    const [mounted, setMounted] = useState(false);
 
-    if (status === 'loading') {
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (status === 'loading' || !mounted) {
         return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
     }
 
@@ -40,6 +46,22 @@ export default function Dashboard() {
                         </h1>
                         <p className="text-gray-400 text-lg">Ready to continue your journey into AI mastery?</p>
                     </div>
+
+                    {/* Resume Learning Quick Action */}
+                    {completedCountL1 < totalModulesL1 && (
+                        <Link
+                            href={`/courses/level-1/modules/${level1Curriculum.weeks.flatMap(w => w.modules).find(m => !isModuleCompleted(m.id))?.id || "1.1"}`}
+                            className="hidden md:flex items-center gap-3 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition-all group"
+                        >
+                            <div className="text-left">
+                                <div className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">Resume Learning</div>
+                                <div className="text-sm font-bold text-white group-hover:text-cyan-400">
+                                    {level1Curriculum.weeks.flatMap(w => w.modules).find(m => !isModuleCompleted(m.id))?.title || "1.1 LLM Perspective"}
+                                </div>
+                            </div>
+                            <span className="text-2xl group-hover:translate-x-1 transition-transform">→</span>
+                        </Link>
+                    )}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
