@@ -6,11 +6,13 @@ interface GlassCardProps {
     children: React.ReactNode;
     className?: string;
     delay?: number;
+    onClick?: () => void;
 }
 
-export const GlassCard = ({ children, className = "", delay = 0 }: GlassCardProps) => {
+export const GlassCard = ({ children, className = "", delay = 0, onClick }: GlassCardProps) => {
     return (
         <motion.div
+            onClick={onClick}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay, ease: "easeOut" }}
