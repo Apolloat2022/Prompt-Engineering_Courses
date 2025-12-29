@@ -61,6 +61,7 @@ model CourseProgress {
   completedModules String   // JSON string of module IDs
   quizScores       String   // JSON string of Record<string, number>
   sandboxHistory   String   // JSON string of history array
+  finalExamScore   Int?     // Score for the professional certification
   lastUpdated      DateTime @updatedAt
   
   user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)

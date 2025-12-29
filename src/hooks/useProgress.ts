@@ -15,13 +15,15 @@ export interface CourseProgress {
     completedModules: string[];
     quizScores: Record<string, number>;
     sandboxHistory: SandboxResult[];
+    finalExamScore?: number;
 }
 
 export function useProgress() {
     const [progress, setProgress] = useState<CourseProgress>({
         completedModules: [],
         quizScores: {},
-        sandboxHistory: []
+        sandboxHistory: [],
+        finalExamScore: undefined
     });
     const [isLoading, setIsLoading] = useState(true);
 
@@ -110,6 +112,18 @@ export function useProgress() {
         syncToDb(newProgress);
     };
 
+    // Save Final Exam Score
+    const saveFinalExamScore = (score: number) => {
+        const newProgress = {
+            ...progress,
+            finalExamScore: score
+        };
+
+        setProgress(newProgress);
+        localStorage.setItem('apollo_course_progress', JSON.stringify(newProgress));
+        syncToDb(newProgress);
+    };
+
     const isModuleCompleted = (moduleId: string) => progress.completedModules.includes(moduleId);
     const getModuleScore = (moduleId: string) => progress.quizScores[moduleId] || 0;
 
@@ -118,6 +132,7 @@ export function useProgress() {
         isLoading,
         saveProgress,
         saveSandboxResult,
+        saveFinalExamScore,
         isModuleCompleted,
         getModuleScore
     };

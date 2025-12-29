@@ -137,71 +137,108 @@ export default function Dashboard() {
                         </a>
                     </div>
 
-                    {/* AI Sandbox Card */}
-                    <div className="glass-card p-6 rounded-2xl relative overflow-hidden group hover:bg-white/5 transition-all border border-pink-500/20 hover:border-pink-500/50">
-                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <span className="text-4xl">🧪</span>
+                </div>
+            </div>
+
+            {/* Professional Certification Board */}
+            <div className="mt-16 bg-gradient-to-br from-indigo-900/40 to-blue-900/20 border border-indigo-500/30 rounded-3xl p-8 md:p-12 relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] -mr-48 -mt-48 group-hover:bg-indigo-500/20 transition-all duration-1000"></div>
+
+                <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                    <div className="flex-grow">
+                        <div className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-bold uppercase tracking-[0.2em] mb-6">
+                            Professional Accreditation
                         </div>
-                        <div className="flex items-center gap-3 mb-4">
-                            <span className="px-2 py-1 rounded-md bg-pink-500/10 text-pink-400 text-[10px] font-bold uppercase tracking-wider border border-pink-500/20">
-                                Tool
-                            </span>
-                        </div>
-                        <h2 className="text-xl font-bold mb-2 group-hover:text-pink-400 transition-colors">AI Prompt Sandbox</h2>
-                        <p className="text-sm text-gray-400 mb-6">
-                            Test and score your prompts against our heuristic engine. Get real-time feedback.
+                        <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                            Professional <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Certification</span>
+                        </h2>
+                        <p className="text-lg text-indigo-200/60 max-w-2xl mb-8 leading-relaxed">
+                            Validate your expertise with our rigorous 100-question final examination.
+                            Achievement awards you the **Prompt Engineering Professional Certification** (PEPC)
+                            and unlocks premium community features.
                         </p>
-                        <a href="/sandbox" className="flex items-center justify-between w-full py-3 px-4 bg-white/5 text-pink-400 font-bold rounded-xl hover:bg-pink-600 hover:text-white transition-all">
-                            <span>Open Sandbox</span>
-                            <span>→</span>
-                        </a>
+
+                        <div className="flex flex-wrap gap-6 mb-8">
+                            <div className="flex items-center gap-2 text-indigo-300">
+                                <span className="text-xl">📊</span>
+                                <span className="font-mono text-sm underline underline-offset-4 decoration-indigo-500/30">100 Multiple Choice</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-indigo-300">
+                                <span className="text-xl">⏱️</span>
+                                <span className="font-mono text-sm underline underline-offset-4 decoration-indigo-500/30">Untimed Session</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-indigo-300">
+                                <span className="text-xl">🎯</span>
+                                <span className="font-mono text-sm underline underline-offset-4 decoration-indigo-500/30">70% Pass Mark</span>
+                            </div>
+                        </div>
+
+                        {progressPercentL1 >= 100 ? (
+                            <Link
+                                href="/certification/exam"
+                                className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-2xl hover:shadow-[0_0_30px_rgba(79,70,229,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98]"
+                            >
+                                Begin Final Examination
+                                <span className="text-xl">→</span>
+                            </Link>
+                        ) : (
+                            <div className="flex items-center gap-3 text-gray-500 font-bold bg-white/5 border border-white/10 px-8 py-4 rounded-xl w-fit">
+                                <span>🔒</span>
+                                Complete Level 1 to Unlock
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="w-full md:w-64 aspect-square rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center relative overflow-hidden group-hover:border-indigo-500/30 transition-colors">
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="text-8xl group-hover:scale-110 transition-transform duration-500">📜</div>
                     </div>
                 </div>
+            </div>
 
-                {/* Student Resources Section */}
-                <div className="mt-16">
-                    <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                        <span className="w-2 h-8 bg-cyan-500 rounded-full"></span>
-                        Student Resources
-                    </h2>
+            {/* Student Resources Section */}
+            <div className="mt-16">
+                <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <span className="w-2 h-8 bg-cyan-500 rounded-full"></span>
+                    Student Resources
+                </h2>
 
-                    <div className="grid md:grid-cols-2 gap-8">
-                        {/* Resource Card 1: Slides */}
-                        <div className="glass-card p-6 flex items-center gap-6 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-all group">
-                            <div className="w-16 h-16 rounded-lg bg-red-500/10 flex items-center justify-center text-3xl border border-red-500/20 group-hover:scale-110 transition-transform">
-                                📑
-                            </div>
-                            <div className="flex-grow">
-                                <h3 className="text-xl font-bold mb-1 group-hover:text-cyan-400 transition-colors">Course Slides</h3>
-                                <p className="text-sm text-gray-400 mb-2">Comprehensive deck covering all modules.</p>
-                                <a
-                                    href="/Prompt-engineering-slide.pdf"
-                                    target="_blank"
-                                    className="text-xs font-bold text-cyan-400 uppercase tracking-wider hover:underline flex items-center gap-1"
-                                >
-                                    Download PDF
-                                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                                </a>
-                            </div>
+                <div className="grid md:grid-cols-2 gap-8">
+                    {/* Resource Card 1: Slides */}
+                    <div className="glass-card p-6 flex items-center gap-6 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-all group">
+                        <div className="w-16 h-16 rounded-lg bg-red-500/10 flex items-center justify-center text-3xl border border-red-500/20 group-hover:scale-110 transition-transform">
+                            📑
                         </div>
+                        <div className="flex-grow">
+                            <h3 className="text-xl font-bold mb-1 group-hover:text-cyan-400 transition-colors">Course Slides</h3>
+                            <p className="text-sm text-gray-400 mb-2">Comprehensive deck covering all modules.</p>
+                            <a
+                                href="/Prompt-engineering-slide.pdf"
+                                target="_blank"
+                                className="text-xs font-bold text-cyan-400 uppercase tracking-wider hover:underline flex items-center gap-1"
+                            >
+                                Download PDF
+                                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            </a>
+                        </div>
+                    </div>
 
-                        {/* Resource Card 2: Roadmap */}
-                        <div className="glass-card p-6 flex items-center gap-6 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-all group">
-                            <div className="w-16 h-16 rounded-lg bg-blue-500/10 flex items-center justify-center text-3xl border border-blue-500/20 group-hover:scale-110 transition-transform">
-                                🗺️
-                            </div>
-                            <div className="flex-grow">
-                                <h3 className="text-xl font-bold mb-1 group-hover:text-cyan-400 transition-colors">Novice to Pro Roadmap</h3>
-                                <p className="text-sm text-gray-400 mb-2">Visual journey map for your skill progression.</p>
-                                <a
-                                    href="/Novice-to-pro.png"
-                                    target="_blank"
-                                    className="text-xs font-bold text-cyan-400 uppercase tracking-wider hover:underline flex items-center gap-1"
-                                >
-                                    View Image
-                                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                                </a>
-                            </div>
+                    {/* Resource Card 2: Roadmap */}
+                    <div className="glass-card p-6 flex items-center gap-6 rounded-2xl border border-white/10 hover:border-cyan-500/30 transition-all group">
+                        <div className="w-16 h-16 rounded-lg bg-blue-500/10 flex items-center justify-center text-3xl border border-blue-500/20 group-hover:scale-110 transition-transform">
+                            🗺️
+                        </div>
+                        <div className="flex-grow">
+                            <h3 className="text-xl font-bold mb-1 group-hover:text-cyan-400 transition-colors">Novice to Pro Roadmap</h3>
+                            <p className="text-sm text-gray-400 mb-2">Visual journey map for your skill progression.</p>
+                            <a
+                                href="/Novice-to-pro.png"
+                                target="_blank"
+                                className="text-xs font-bold text-cyan-400 uppercase tracking-wider hover:underline flex items-center gap-1"
+                            >
+                                View Image
+                                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                            </a>
                         </div>
                     </div>
                 </div>

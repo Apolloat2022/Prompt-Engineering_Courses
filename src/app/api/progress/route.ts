@@ -20,12 +20,14 @@ export async function POST(request: Request) {
                 completedModules: JSON.stringify(body.completedModules),
                 quizScores: JSON.stringify(body.quizScores),
                 sandboxHistory: JSON.stringify(body.sandboxHistory),
+                finalExamScore: body.finalExamScore ? parseInt(body.finalExamScore) : undefined,
             },
             create: {
                 userId: user.id,
                 completedModules: JSON.stringify(body.completedModules),
                 quizScores: JSON.stringify(body.quizScores),
                 sandboxHistory: JSON.stringify(body.sandboxHistory),
+                finalExamScore: body.finalExamScore ? parseInt(body.finalExamScore) : undefined,
             }
         });
 
@@ -56,6 +58,7 @@ export async function GET() {
             completedModules: JSON.parse(user.progress.completedModules || "[]"),
             quizScores: JSON.parse(user.progress.quizScores || "{}"),
             sandboxHistory: JSON.parse(user.progress.sandboxHistory || "[]"),
+            finalExamScore: user.progress.finalExamScore || undefined,
         });
 
     } catch (error) {

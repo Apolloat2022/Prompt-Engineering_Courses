@@ -92,11 +92,13 @@ export default function ProfilePage() {
                             <div className="text-xs text-gray-400 uppercase tracking-wider">Prompts Tested</div>
                         </div>
                         <div className="p-4 rounded-xl bg-black/20 border border-white/5 text-center">
-                            <div className="text-3xl font-bold text-green-400 mb-1">{avgScore >= 80 && completedCount > 0 ? 1 : 0}</div>
+                            <div className="text-3xl font-bold text-green-400 mb-1">
+                                {(avgScore >= 80 && completedCount > 0 ? 1 : 0) + (progress.finalExamScore && progress.finalExamScore >= 70 ? 1 : 0)}
+                            </div>
                             <div className="text-xs text-gray-400 uppercase tracking-wider">Certificates</div>
                         </div>
                         <div className="p-4 rounded-xl bg-black/20 border border-white/5 text-center">
-                            <div className="text-3xl font-bold text-orange-400 mb-1">{completedCount * 150 + (promptsTested * 10)}</div>
+                            <div className="text-3xl font-bold text-orange-400 mb-1">{completedCount * 150 + (promptsTested * 10) + (progress.finalExamScore ? progress.finalExamScore * 5 : 0)}</div>
                             <div className="text-xs text-gray-400 uppercase tracking-wider">XP</div>
                         </div>
                     </div>
@@ -123,6 +125,10 @@ export default function ProfilePage() {
                                 <span className="text-3xl">✨</span>
                                 <span className="text-[10px] font-bold uppercase tracking-widest text-center">Perfectionist</span>
                             </div>
+                            <div className={`p-4 rounded-2xl border transition-all flex flex-col items-center gap-2 w-32 ${progress.finalExamScore && progress.finalExamScore >= 70 ? 'bg-indigo-500/10 border-indigo-500/50 grayscale-0' : 'bg-white/5 border-white/10 grayscale opacity-40'}`}>
+                                <span className="text-3xl">🎓</span>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-center">Professional</span>
+                            </div>
                         </div>
                     </div>
 
@@ -131,8 +137,9 @@ export default function ProfilePage() {
                         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
                             <span>📜</span> Certificate Gallery
                         </h2>
-                        {avgScore >= 80 && completedCount > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* Level 1 Certificate */}
+                            {avgScore >= 80 && completedCount > 0 && (
                                 <Link
                                     href={`/certificate?course=Level 1 Fundamentals&id=AP-${userInitials}-L1`}
                                     className="p-6 rounded-xl bg-gradient-to-br from-[#1c245d] to-[#131b4d] border border-cyan-500/30 hover:border-cyan-500 transition-all group"
@@ -142,15 +149,32 @@ export default function ProfilePage() {
                                         <span className="text-2xl">🎓</span>
                                     </div>
                                     <h3 className="font-bold text-white group-hover:text-cyan-400 transition-colors">AI Communication Fundamentals</h3>
-                                    <p className="text-xs text-gray-500 mt-2">Earned: {new Date().toLocaleDateString()}</p>
+                                    <p className="text-xs text-gray-500 mt-2">Level 1 Achievement</p>
                                 </Link>
-                            </div>
-                        ) : (
-                            <div className="p-8 border border-dashed border-white/10 rounded-xl text-center">
-                                <p className="text-gray-500 italic text-sm">Pass a module with 80% to unlock your first certificate.</p>
-                                <Link href="/courses/level-1" className="text-cyan-400 text-xs font-bold uppercase tracking-widest mt-4 inline-block hover:underline">Start Learning →</Link>
-                            </div>
-                        )}
+                            )}
+
+                            {/* Professional Certificate */}
+                            {progress.finalExamScore && progress.finalExamScore >= 70 && (
+                                <Link
+                                    href={`/certificate?course=Professional Certification&id=PROF-${userInitials}`}
+                                    className="p-6 rounded-xl bg-gradient-to-br from-[#1e1b4b] to-[#312e81] border border-indigo-500/30 hover:border-indigo-500 transition-all group shadow-lg shadow-indigo-500/10"
+                                >
+                                    <div className="flex items-center justify-between mb-4">
+                                        <span className="text-indigo-400 font-bold text-sm tracking-tighter">PROFESSIONAL</span>
+                                        <span className="text-2xl">🏆</span>
+                                    </div>
+                                    <h3 className="font-bold text-white group-hover:text-indigo-400 transition-colors">Prompt Engineering Professional</h3>
+                                    <p className="text-xs text-gray-400 mt-2">Score: {progress.finalExamScore}%</p>
+                                </Link>
+                            )}
+
+                            {!(avgScore >= 80 && completedCount > 0) && !progress.finalExamScore && (
+                                <div className="col-span-full p-8 border border-dashed border-white/10 rounded-xl text-center">
+                                    <p className="text-gray-500 italic text-sm">No certificates earned yet. Complete your journey to unlock them.</p>
+                                    <Link href="/dashboard" className="text-cyan-400 text-xs font-bold uppercase tracking-widest mt-4 inline-block hover:underline">Return to Dashboard →</Link>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     <hr className="my-10 border-white/10" />
